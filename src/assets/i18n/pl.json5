@@ -631,6 +631,7 @@
   "error.sub-communities": "Wystąpił błąd podczas tworzenia podzbiorów",
   "error.submission.sections.init-form-error": "Wystąpił błąd w czasie inicjalizacji sekcji, sprawdź konfigurację. Szczegóły poniżej: <br> <br>",
   "error.top-level-communities": "Błąd podczas pobierania nadrzędnego zbioru",
+  "error.top-level-communites": "Błąd podczas pobierania nadrzędnego zbioru",
   "error.validation.license.notgranted": "Musisz wyrazić tę zgodę, aby przesłać swoje zgłoszenie. Jeśli nie możesz wyrazić zgody w tym momencie, możesz zapisać swoją pracę i wrócić do niej później lub usunąć zgłoszenie.",
   "error.validation.pattern": "Te dane wejściowe są ograniczone przez aktualny wzór: {{ pattern }}.",
   "error.validation.filerequired": "Przesłanie pliku jest obowiązkowe",
