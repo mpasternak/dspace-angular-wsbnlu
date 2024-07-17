@@ -1484,7 +1484,7 @@
   "relationships.isContributorOf.Person": "Autor",
   "relationships.isFundingAgencyOf.OrgUnit": "Instytucja finansująca",
   "repository.image.logo": "Logo repozytorium",
-  "repository.title.prefix": "DSpace Angular :: ",
+  "repository.title.prefix": "Repozytorium WSB-NLU :: ",
   "researcher.profile.action.processing": "Procesowanie...",
   "researcher.profile.associated": "Przypisanie profilu badacza",
   "researcher.profile.create.new": "Utwórz nowy",
