@@ -12,6 +12,7 @@ import { MetadataFieldWrapperComponent } from '../../../../shared/metadata-field
 import { listableObjectComponent } from '../../../../shared/object-collection/shared/listable-object/listable-object.decorator';
 import { ThemedResultsBackButtonComponent } from '../../../../shared/results-back-button/themed-results-back-button.component';
 import { ThemedThumbnailComponent } from '../../../../thumbnail/themed-thumbnail.component';
+import { CitationExportButtonComponent } from '../../../citation/citation-export-button/citation-export-button.component';
 import { CollectionsComponent } from '../../../field-components/collections/collections.component';
 import { ThemedMediaViewerComponent } from '../../../media-viewer/themed-media-viewer.component';
 import { MiradorViewerComponent } from '../../../mirador-viewer/mirador-viewer.component';
@@ -39,6 +40,7 @@ import { ItemComponent } from '../shared/item.component';
   standalone: true,
   imports: [
     AsyncPipe,
+    CitationExportButtonComponent,
     CollectionsComponent,
     DsoEditMenuComponent,
     GenericItemPageFieldComponent,

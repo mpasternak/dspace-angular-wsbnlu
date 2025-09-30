@@ -1,0 +1,70 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ 'citation-export.modal.title' | translate }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <div class="form-group mb-3">
+    <label for="citation-format" class="form-label">
+      {{ 'citation-export.modal.format-label' | translate }}
+    </label>
+    <select
+      id="citation-format"
+      class="form-control"
+      [(ngModel)]="selectedFormat"
+      (change)="onFormatChange()"
+      [disabled]="isLoading">
+      <option *ngFor="let format of formats" [value]="format.key">
+        {{ format.label }}
+      </option>
+    </select>
+  </div>
+
+  <div class="citation-preview-container">
+    <label class="form-label">
+      {{ 'citation-export.modal.preview-label' | translate }}
+    </label>
+
+    <div *ngIf="isLoading" class="text-center p-3">
+      <i class="fas fa-spinner fa-spin"></i>
+      {{ 'citation-export.modal.generating' | translate }}
+    </div>
+
+    <div *ngIf="errorMessage && !isLoading" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="citationText && !isLoading && !errorMessage" class="citation-preview">
+      <pre class="border rounded p-3 bg-light">{{ citationText }}</pre>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="copyCitation()"
+    [disabled]="!citationText || isLoading">
+    <i class="fas fa-copy"></i>
+    {{ 'citation-export.modal.copy-button' | translate }}
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="downloadCitation()"
+    [disabled]="!citationText || isLoading">
+    <i class="fas fa-download"></i>
+    {{ 'citation-export.modal.download-button' | translate }}
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-outline-secondary"
+    (click)="close()">
+    {{ 'citation-export.modal.close-button' | translate }}
+  </button>
+</div>

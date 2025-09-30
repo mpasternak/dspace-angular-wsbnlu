@@ -1,0 +1,10 @@
+<button
+  type="button"
+  [class]="buttonClass"
+  (click)="openCitationModal()"
+  [attr.aria-label]="'citation-export.button.aria-label' | translate">
+  <i *ngIf="showIcon" class="fas fa-quote-right" aria-hidden="true"></i>
+  <span *ngIf="showText">
+    {{ 'citation-export.button.label' | translate }}
+  </span>
+</button>

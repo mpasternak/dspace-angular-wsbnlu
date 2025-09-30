@@ -111,7 +111,7 @@ dev: check-node check-npm
 	@echo "Server will be available at: http://localhost:4000"
 	@echo "Press Ctrl+C to stop"
 	@echo ""
-	npx ng serve --port 4000 --configuration development
+	npm run start:dev
 
 # Alias for dev
 start-dev: dev

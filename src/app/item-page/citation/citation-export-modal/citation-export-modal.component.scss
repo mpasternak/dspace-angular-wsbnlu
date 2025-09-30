@@ -1,0 +1,24 @@
+.citation-preview-container {
+  min-height: 200px;
+
+  .citation-preview {
+    max-height: 400px;
+    overflow-y: auto;
+
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  }
+}
+
+.modal-footer {
+  button {
+    i {
+      margin-right: 0.25rem;
+    }
+  }
+}
