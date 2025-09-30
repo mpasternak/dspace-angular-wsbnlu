@@ -32,11 +32,12 @@
       {{ 'citation-export.modal.generating' | translate }}
     </div>
 
-    <div *ngIf="errorMessage && !isLoading" class="alert alert-danger">
+    <div *ngIf="errorMessage && !isLoading" class="alert alert-warning mb-3">
+      <i class="fas fa-exclamation-triangle"></i>
       {{ errorMessage }}
     </div>
 
-    <div *ngIf="citationText && !isLoading && !errorMessage" class="citation-preview">
+    <div *ngIf="citationText && !isLoading" class="citation-preview">
       <pre class="border rounded p-3 bg-light">{{ citationText }}</pre>
     </div>
   </div>

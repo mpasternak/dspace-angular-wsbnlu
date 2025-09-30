@@ -64,9 +64,16 @@ export class CitationExportModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Default to APA format
+    // Try to load previously selected format from localStorage
+    const savedFormat = localStorage.getItem('citation-preferred-format');
+
     if (this.formats.length > 0) {
-      this.selectedFormat = this.formats[0].key;
+      // Use saved format if it exists and is valid, otherwise default to APA (first format)
+      if (savedFormat && this.formats.find(f => f.key === savedFormat)) {
+        this.selectedFormat = savedFormat;
+      } else {
+        this.selectedFormat = this.formats[0].key;
+      }
       this.generateCitation();
     }
   }
@@ -83,6 +90,18 @@ export class CitationExportModalComponent implements OnInit {
     this.errorMessage = '';
 
     try {
+      // Check for minimum required metadata
+      const validationResult = this.citationService.validateItemForCitation(this.item);
+
+      if (!validationResult.isValid) {
+        this.errorMessage = this.translateService.instant('citation-export.error.missing-metadata', {
+          fields: validationResult.missingFields.join(', ')
+        });
+        this.citationText = this.translateService.instant('citation-export.error.incomplete-citation');
+        this.isLoading = false;
+        return;
+      }
+
       this.citationText = this.citationService.generateCitation(this.item, this.selectedFormat);
       this.isLoading = false;
     } catch (error) {
@@ -96,6 +115,10 @@ export class CitationExportModalComponent implements OnInit {
    * Handle format selection change
    */
   onFormatChange(): void {
+    // Save the selected format to localStorage for future use
+    if (this.selectedFormat) {
+      localStorage.setItem('citation-preferred-format', this.selectedFormat);
+    }
     this.generateCitation();
   }
 

@@ -261,6 +261,36 @@ export class CitationService {
   }
 
   /**
+   * Validate if an item has minimum required metadata for citation generation
+   */
+  public validateItemForCitation(item: Item): { isValid: boolean; missingFields: string[] } {
+    const missingFields: string[] = [];
+
+    // Check for title (required)
+    const title = this.getMetadataValue(item.metadata, 'dc.title');
+    if (!title) {
+      missingFields.push('Title');
+    }
+
+    // Check for at least one author
+    const authors = this.getMetadataValues(item.metadata, ['dc.contributor.author', 'dc.creator']);
+    if (authors.length === 0) {
+      missingFields.push('Author(s)');
+    }
+
+    // Check for date
+    const date = this.getMetadataValue(item.metadata, 'dc.date.issued');
+    if (!date) {
+      missingFields.push('Publication Date');
+    }
+
+    return {
+      isValid: missingFields.length === 0,
+      missingFields: missingFields
+    };
+  }
+
+  /**
    * Generate a citation in the specified format
    */
   public generateCitation(item: Item, formatKey: string): string {

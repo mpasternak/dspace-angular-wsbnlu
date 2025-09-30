@@ -2982,6 +2982,10 @@
 
   "citation-export.error.download-failed": "Failed to download citation",
 
+  "citation-export.error.missing-metadata": "Cannot generate complete citation. Missing required fields: {{fields}}",
+
+  "citation-export.error.incomplete-citation": "Note: This citation may be incomplete due to missing metadata. Please verify and add missing information manually.",
+
   "item.page.options": "Options",
 
   "item.page.orcid.title": "ORCID",
