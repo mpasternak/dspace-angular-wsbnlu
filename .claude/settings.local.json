@@ -8,7 +8,12 @@
       "WebFetch(domain:ruj.uj.edu.pl)",
       "WebSearch",
       "Bash(npx tsc:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "WebFetch(domain:www.wsb-nlu.edu.pl)",
+      "Bash(mkdir:*)",
+      "Bash(wget:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build:prod:*)"
     ],
     "deny": [],
     "ask": []
