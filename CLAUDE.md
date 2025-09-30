@@ -123,3 +123,14 @@ When working with this codebase:
 4. **Lazy Loading**: Large features should be in separate modules for lazy loading
 5. **SSR Compatibility**: Ensure code works in both browser and Node.js environments
 6. **REST API Contract**: Follow the contract defined at https://github.com/DSpace/RestContract
+
+## CRITICAL - DO NOT RUN BUILD COMMANDS
+
+**ABSOLUTELY NEVER run any of these commands:**
+- `npm run build`
+- `npm run build:prod`
+- `npm run build:ssr`
+- `ng build`
+- Any other build-related commands
+
+**THE USER IS ALREADY RUNNING BUILDS IN THE BACKGROUND.** Running additional build commands will cause conflicts and slow everything down. Only reference or document build commands when needed, but NEVER execute them.

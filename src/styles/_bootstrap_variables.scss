@@ -15,6 +15,12 @@
 
 /*** FONT FAMILIES AND FONT SIZES ***/
 
+// Import Be Vietnam Pro from local fonts (avoids external dependencies and MIME type issues)
+@import '../assets/fonts/be-vietnam-pro/be-vietnam-pro';
+
+// Define font stack with Be Vietnam Pro as primary font
+$font-family-sans-serif: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif !default;
+
 $font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
 $h1-font-size: $font-size-base * 2.125 !default;
 $h2-font-size: $font-size-base * 1.75 !default;
@@ -32,10 +38,10 @@ $enable-shadows: true !default;
 /*** SEMANTIC COLOR SCHEME ***/
 
 // Override semantic colors
-$primary:   #2b4e72 !default;               // Blue gray
+$primary:   #343E63 !default;               // WSB-NLU dark blue
 $secondary: #495057 !default;               // As Bootstrap $gray-700
 $success:   #94ba65 !default;               // Lime
-$info:      #006666 !default;               // Blue green
+$info:      #343E63 !default;               // WSB-NLU dark blue
 $warning:   #ec9433 !default;               // Orange
 $danger:    #cf4444 !default;               // Red
 $light:     #f8f9fa !default;               // As Bootstrap $gray-100
@@ -47,8 +53,8 @@ $global-custom-semantic-colors: (
 
 /*** OTHER BOOTSTRAP VARIABLES ***/
 
-$link-color: $info !default;
-$link-hover-color: darken($link-color, 15%) !default;
+$link-color: #343E63 !default;
+$link-hover-color: #81BBF8 !default;
 
 
 $navbar-dark-color: rgba(white, .5) !default;
@@ -76,8 +82,8 @@ $primary-bg-subtle: $light !default;
 
 /*** CUSTOM DSPACE VARIABLES ***/
 
-$ds-home-news-link-color: $link-color !default;
-$ds-home-news-link-hover-color: darken($ds-home-news-link-color, 15%) !default;
+$ds-home-news-link-color: #343E63 !default;
+$ds-home-news-link-hover-color: #81BBF8 !default;
 $ds-breadcrumb-link-color: #003333 !default;
 $ds-breadcrumb-link-active-color: #040D11 !default;
 
@@ -85,14 +91,14 @@ $ds-header-navbar-border-top-color: #fff !default;
 $ds-header-navbar-border-bottom-color: #ced4da !default;
 
 $ds-header-bg: #fff !default;
-$ds-header-icon-color: $link-color !default;
-$ds-header-icon-color-hover: $link-hover-color !default;
+$ds-header-icon-color: #343E63 !default;
+$ds-header-icon-color-hover: #81BBF8 !default;
 
 $ds-navbar-bg: #fff !default;
 $ds-navbar-dropdown-bg: #fff !default;
 $ds-expandable-navbar-bg: #fff !default;
-$ds-navbar-link-color: $link-color !default;
-$ds-navbar-link-color-hover: #{darken($ds-navbar-link-color, 15%)} !default;
+$ds-navbar-link-color: #343E63 !default;
+$ds-navbar-link-color-hover: #81BBF8 !default;
 
 $ds-slider-color: darken(#94BA65, 17%) !default;
 $ds-slider-handle-color: darken(#2B4E72, 17%) !default;

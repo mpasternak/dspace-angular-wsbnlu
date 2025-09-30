@@ -5,6 +5,7 @@ html {
 
 body {
     overflow-x: hidden;
+    font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif !important;
 }
 
 // Sticky Footer
@@ -351,14 +352,44 @@ ul.dso-edit-menu-dropdown>li .nav-item.nav-link {
 }
 
 .btn {
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
     &:focus {
         outline-offset: 2px !important;
         outline-style: solid !important;
         outline-width: 2px !important;
-        box-shadow: none !important;
+        box-shadow: 0 0 0 0.2rem rgba(52, 62, 99, 0.25) !important;
     }
     &:disabled {
         opacity: 0.7;
+        box-shadow: none;
+    }
+    &.btn-primary {
+        background-color: #343E63;
+        border-color: #343E63;
+        &:hover {
+            background-color: lighten(#343E63, 10%);
+            border-color: lighten(#343E63, 10%);
+        }
+    }
+    &.btn-info {
+        background-color: #343E63;
+        border-color: #343E63;
+        &:hover {
+            background-color: lighten(#343E63, 10%);
+            border-color: lighten(#343E63, 10%);
+        }
     }
     &.btn-success {
         background-color: darken($success, 20%);
@@ -429,7 +460,27 @@ ul.dso-edit-menu-dropdown>li .nav-item.nav-link {
     }
 
     &.btn-primary:focus, &.btn-outline-primary:focus {
-        outline-color: darken($primary, 5%);
+        outline-color: #343E63;
+    }
+
+    &.btn-outline-primary {
+        color: #343E63;
+        border-color: #343E63;
+        &:hover {
+            background-color: #343E63;
+            border-color: #343E63;
+            color: white;
+        }
+    }
+
+    &.btn-outline-info {
+        color: #343E63;
+        border-color: #343E63;
+        &:hover {
+            background-color: #343E63;
+            border-color: #343E63;
+            color: white;
+        }
     }
 }
 
@@ -555,7 +606,66 @@ ngb-tooltip-window {
 
 .link-contrast {
   // Rules for accessibility to meet minimum contrast and have an identifiable link between other texts
-  color: darken($link-color, 5%);
+  color: #343E63;
   // We use underline to discern link from text as we can't make color lighter on a white bg
   text-decoration: underline;
+}
+
+// WSB-NLU style animated links
+a {
+  position: relative;
+  text-decoration: none;
+  color: #343E63 !important;
+  transition: color 0.15s ease-in-out;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: #343E63;
+    transition: width 0.15s ease-in-out, background-color 0.15s ease-in-out;
+  }
+
+  &:hover {
+    color: #81BBF8 !important;
+    text-decoration: none;
+
+    &::after {
+      width: 100%;
+      background-color: #00bfff;
+    }
+  }
+
+  // For navigation and menu links that already have their own styling
+  &.nav-link,
+  &.dropdown-item,
+  &.btn,
+  &.badge,
+  &.page-link,
+  &.breadcrumb-item {
+    &::after {
+      display: none;
+    }
+  }
+
+  // Keep traditional underline for specific cases
+  &.link-underline {
+    text-decoration: underline;
+    &::after {
+      display: none;
+    }
+  }
+}
+
+// Fix for active list-group-item text color in browse navigation
+.list-group-item.active {
+  color: white !important;
+}
+
+// Fix for active page number text color in pagination
+.page-item.active .page-link {
+  color: white !important;
 }
