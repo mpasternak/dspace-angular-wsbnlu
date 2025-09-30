@@ -78,7 +78,7 @@ export const ROUTES: Route[] = [
           {
             path: '',
             pathMatch: 'full',
-            component: ComcolSearchSectionComponent,
+            redirectTo: 'subcoms-cols',
           },
           {
             path: 'search',

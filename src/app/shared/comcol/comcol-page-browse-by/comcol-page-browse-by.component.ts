@@ -113,11 +113,13 @@ export class ComcolPageBrowseByComponent implements OnDestroy, OnInit {
             });
           }
 
-          allOptions.push(...browseDefListRD.payload.page.map((config: BrowseDefinition) => ({
-            id: `browse_${config.id}`,
-            label: `browse.comcol.by.${config.id}`,
-            routerLink: `${comColRoute}/browse/${config.id}`,
-          })));
+          allOptions.push(...browseDefListRD.payload.page
+            .filter((config: BrowseDefinition) => config.id !== 'srsc' && config.id !== 'subject') // Filter out Subject categories and subject browsing
+            .map((config: BrowseDefinition) => ({
+              id: `browse_${config.id}`,
+              label: `browse.comcol.by.${config.id}`,
+              routerLink: `${comColRoute}/browse/${config.id}`,
+            })));
 
           // When the default tab is not the "search" tab, the "search" tab is moved
           // at the end of the tabs ribbon for aesthetics purposes.

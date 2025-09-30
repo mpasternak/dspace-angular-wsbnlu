@@ -63,16 +63,18 @@ export class BrowseMenuProvider extends AbstractExpandableMenuProvider {
       getFirstSucceededRemoteData(),
       map((rd: RemoteData<PaginatedList<BrowseDefinition>>) => {
         return [
-          ...rd.payload.page.map((browseDef) => {
-            return {
-              visible: true,
-              model: {
-                type: MenuItemType.LINK,
-                text: `menu.section.browse_global_by_${browseDef.id}`,
-                link: `/browse/${browseDef.id}`,
-              },
-            };
-          }),
+          ...rd.payload.page
+            .filter((browseDef) => browseDef.id !== 'srsc' && browseDef.id !== 'subject') // Filter out Subject categories and subject browsing
+            .map((browseDef) => {
+              return {
+                visible: true,
+                model: {
+                  type: MenuItemType.LINK,
+                  text: `menu.section.browse_global_by_${browseDef.id}`,
+                  link: `/browse/${browseDef.id}`,
+                },
+              };
+            }),
           {
             visible: this.appConfig.geospatialMapViewer.enableBrowseMap,
             model: {
