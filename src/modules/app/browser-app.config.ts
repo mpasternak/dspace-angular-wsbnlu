@@ -64,6 +64,7 @@ import { BrowserOrejimeService } from '../../app/shared/cookies/browser-orejime.
 import { OrejimeService } from '../../app/shared/cookies/orejime.service';
 import { MissingTranslationHelper } from '../../app/shared/translate/missing-translation.helper';
 import { GoogleAnalyticsService } from '../../app/statistics/google-analytics.service';
+import { UserWayService } from '../../app/statistics/userway.service';
 import { SubmissionService } from '../../app/submission/submission.service';
 import { REQUEST } from '../../express.tokens';
 import { TranslateBrowserLoader } from '../../ngx-translate-loaders/translate-browser.loader';
@@ -143,6 +144,10 @@ export const browserAppConfig: ApplicationConfig = mergeApplicationConfig({
     {
       provide: GoogleAnalyticsService,
       useClass: GoogleAnalyticsService,
+    },
+    {
+      provide: UserWayService,
+      useClass: UserWayService,
     },
     {
       provide: Angulartics2GoogleTagManager,
