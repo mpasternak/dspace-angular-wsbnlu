@@ -14,7 +14,8 @@
       "Bash(wget:*)",
       "Bash(npm install:*)",
       "Bash(npm run build:prod:*)",
-      "WebFetch(domain:duraspace.org)"
+      "WebFetch(domain:duraspace.org)",
+      "Bash(npm ls:*)"
     ],
     "deny": [],
     "ask": []

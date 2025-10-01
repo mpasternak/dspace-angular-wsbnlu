@@ -1,7 +1,11 @@
 # DSpace Angular Development Makefile
 # This Makefile provides convenient targets for common development tasks
 
-.PHONY: help prepare-developer-machine dev start-dev install clean test lint build e2e prod check-node check-npm
+# Translation file configuration (can be overridden)
+SOURCE_TRANSLATION ?= src/assets/i18n/en.json5
+TARGET_TRANSLATION ?= src/assets/i18n/pl.json5
+
+.PHONY: help prepare-developer-machine dev start-dev install clean test lint build e2e prod check-node check-npm compare-translations compare-translations-show-missing compare-translations-add-keys
 
 # Default target - show help
 help:
@@ -20,6 +24,16 @@ help:
 	@echo "  make build                      - Build for production"
 	@echo "  make e2e                        - Run E2E tests with Cypress"
 	@echo "  make prod                       - Build and run production server"
+	@echo ""
+	@echo "Translation management:"
+	@echo "  make compare-translations              - Compare source and target translation files"
+	@echo "  make compare-translations-show-missing - Show missing keys in target file"
+	@echo "  make compare-translations-add-keys     - Add missing keys to target file"
+	@echo ""
+	@echo "Translation variables (can be overridden):"
+	@echo "  SOURCE_TRANSLATION = $(SOURCE_TRANSLATION)"
+	@echo "  TARGET_TRANSLATION = $(TARGET_TRANSLATION)"
+	@echo "  Example: make compare-translations TARGET_TRANSLATION=src/assets/i18n/de.json5"
 	@echo ""
 	@echo "Development server runs on: http://localhost:4000"
 	@echo "Required: Node.js v18.x or v20.x, npm >= v10.x"
@@ -178,3 +192,51 @@ status:
 	else \
 		echo "ℹ️  No build artifacts (run: make build)"; \
 	fi
+
+# Compare translation files to find missing and orphaned keys
+compare-translations:
+	@echo "Comparing translation files..."
+	@echo "Source: $(SOURCE_TRANSLATION)"
+	@echo "Target: $(TARGET_TRANSLATION)"
+	@echo ""
+	@if ! command -v python3 >/dev/null 2>&1; then \
+		echo "❌ Python 3 is not installed"; \
+		exit 1; \
+	fi
+	@python3 -c "import json5" 2>/dev/null || { \
+		echo "❌ json5 package is not installed"; \
+		echo "   Install it with: pip3 install json5"; \
+		exit 1; \
+	}
+	@python3 compare_json5_translations.py --en $(SOURCE_TRANSLATION) --pl $(TARGET_TRANSLATION)
+
+# Show only missing keys in target translation file
+compare-translations-show-missing:
+	@echo "Showing missing keys in $(TARGET_TRANSLATION)..."
+	@echo ""
+	@if ! command -v python3 >/dev/null 2>&1; then \
+		echo "❌ Python 3 is not installed"; \
+		exit 1; \
+	fi
+	@python3 -c "import json5" 2>/dev/null || { \
+		echo "❌ json5 package is not installed"; \
+		echo "   Install it with: pip3 install json5"; \
+		exit 1; \
+	}
+	@python3 compare_json5_translations.py --en $(SOURCE_TRANSLATION) --pl $(TARGET_TRANSLATION) --missing
+
+# Add missing keys from source to target translation file
+compare-translations-add-keys:
+	@echo "Adding missing keys to $(TARGET_TRANSLATION)..."
+	@echo "Source: $(SOURCE_TRANSLATION)"
+	@echo ""
+	@if ! command -v python3 >/dev/null 2>&1; then \
+		echo "❌ Python 3 is not installed"; \
+		exit 1; \
+	fi
+	@python3 -c "import json5" 2>/dev/null || { \
+		echo "❌ json5 package is not installed"; \
+		echo "   Install it with: pip3 install json5"; \
+		exit 1; \
+	}
+	@python3 compare_json5_translations.py --en $(SOURCE_TRANSLATION) --pl $(TARGET_TRANSLATION) --add-keys
