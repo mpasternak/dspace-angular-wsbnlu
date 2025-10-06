@@ -3,6 +3,11 @@
     background-color: var(--ds-header-bg);
   }
 
+  .navbar-brand {
+    width: 120px;
+    height: 50px;
+  }
+
   .navbar-brand img {
     max-height: var(--ds-header-logo-height);
     max-width: 100%;

@@ -26,6 +26,12 @@ img {
       border: var(--ds-thumbnail-placeholder-border);
       color: var(--ds-thumbnail-placeholder-color);
       font-weight: bold;
+
+      .placeholder-logo {
+        max-width: 85%;
+        max-height: 85%;
+        object-fit: contain;
+      }
     }
     > .centered {
       width: 100%;

@@ -2213,36 +2213,9 @@
 
   "home.top-level-communities.help": "Select a community to browse its collections.",
 
-  // WSB-NLU Facts
-  "home.wsb.fact.1": "WSB-NLU was founded over 34 years ago and is one of the oldest private universities in Poland",
-  "home.wsb.fact.2": "The university offers 4 main study directions and 56 postgraduate programs",
-  "home.wsb.fact.3": "WSB-NLU has students from 43 different countries worldwide",
-  "home.wsb.fact.4": "Most teaching staff come from professional business and industry backgrounds, ensuring practical education",
-  "home.wsb.fact.5": "WSB-NLU uses innovative teaching methods: workshops, case studies, and Project Based Learning",
-  "home.wsb.fact.6": "WSB-NLU ranks in the TOP 10 most frequently chosen private universities in Poland according to Ministry rankings",
-  "home.wsb.fact.7": "The university has a modern CloudA™ e-learning platform supporting hybrid education",
-  "home.wsb.fact.8": "WSB-NLU has 15 academic research circles and partnerships with over 30 companies and organizations",
-  "home.wsb.fact.9": "The campus includes a modern 'Student's House' dormitory and offers various study formats",
-  "home.wsb.fact.10": "WSB-NLU has international accreditations from Eduniversal and participates in the Erasmus+ program",
+  "home.header.title": "Institutional Repository",
 
-  // DSpace Search Tips
-  "home.dspace.tip.1": "Tip: Use boolean operators AND, OR, NOT for precise searches",
-  "home.dspace.tip.2": "Tip: Use quotes for exact phrase searching: \"machine learning\"",
-  "home.dspace.tip.3": "Tip: Search specific fields: dc.title:research or dc.subject:biology",
-  "home.dspace.tip.4": "Tip: Use wildcards: dc.subject:fin* finds finance, financial, finish",
-  "home.dspace.tip.5": "Tip: Date ranges: dc.date.issued:[2010 TO 2024] finds publications in that period",
-  "home.dspace.tip.6": "Tip: Combine operators: dc.title:research AND dc.date.issued:[2020 TO *]",
-  "home.dspace.tip.7": "Tip: Find any value in field: dc.description.abstract:*",
-  "home.dspace.tip.8": "Tip: Default search uses AND operator between words automatically",
-  "home.dspace.tip.9": "Tip: Put special characters in quotes to find them literally",
-  "home.dspace.tip.10": "Tip: Use parentheses for complex queries: (test OR trial) AND results",
-
-  // DSpace Facts
-  "home.dspace.fact.1": "DSpace was released in November 2002 by MIT and HP Labs",
-  "home.dspace.fact.2": "Over 3,000 organizations worldwide use DSpace software",
-  "home.dspace.fact.3": "DSpace is available in 22 languages and is fully open source",
-  "home.dspace.fact.4": "DSpace manages all digital formats: PDFs, images, audio, video",
-  "home.dspace.fact.5": "You're using DSpace 9.1 - the latest version of digital repository software",
+  "home.header.subtitle": "The Repository of Wyższa Szkoła Biznesu – National-Louis University in Nowy Sącz",
 
   "info.accessibility-settings.breadcrumbs": "Accessibility settings",
 

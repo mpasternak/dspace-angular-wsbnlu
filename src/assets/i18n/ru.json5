@@ -3386,6 +3386,10 @@
   // "home.top-level-communities.help": "Select a community to browse its collections.",
   "home.top-level-communities.help": "Выберите сообщество для просмотра коллекций.",
 
+  "home.header.title": "Институциональный Репозиторий",
+
+  "home.header.subtitle": "Высшая школа бизнеса – Национальный университет Луи в Новом Сонче",
+
   // "info.accessibility-settings.breadcrumbs": "Accessibility settings",
   // TODO New key - Add a translation
   "info.accessibility-settings.breadcrumbs": "Accessibility settings",
