@@ -3446,8 +3446,7 @@
   "info.accessibility-settings.invalid-form-notification": "Did not save. The form contains invalid values.",
 
   // "info.accessibility-settings.liveRegionTimeOut.label": "ARIA Live region time out (in seconds)",
-  // TODO New key - Add a translation
-  "info.accessibility-settings.liveRegionTimeOut.label": "ARIA Live region time out (in seconds)",
+  "info.accessibility-settings.liveRegionTimeOut.label": "Время ожидания ARIA Live области (в секундах)",
 
   // "info.accessibility-settings.liveRegionTimeOut.hint": "The duration after which a message in the ARIA live region disappears. ARIA live regions are not visible on the page, but provide announcements of notifications (or other actions) to screen readers.",
   // TODO New key - Add a translation
@@ -3458,8 +3457,7 @@
   "info.accessibility-settings.liveRegionTimeOut.invalid": "Live region time out must be greater than 0",
 
   // "info.accessibility-settings.notificationTimeOut.label": "Notification time out (in seconds)",
-  // TODO New key - Add a translation
-  "info.accessibility-settings.notificationTimeOut.label": "Notification time out (in seconds)",
+  "info.accessibility-settings.notificationTimeOut.label": "Время ожидания уведомления (в секундах)",
 
   // "info.accessibility-settings.notificationTimeOut.hint": "The duration after which a notification disappears.",
   // TODO New key - Add a translation
@@ -3486,12 +3484,10 @@
   "info.accessibility-settings.reset-notification": "Successfully reset settings.",
 
   // "info.accessibility-settings.reset": "Reset accessibility settings",
-  // TODO New key - Add a translation
-  "info.accessibility-settings.reset": "Reset accessibility settings",
+  "info.accessibility-settings.reset": "Сбросить настройки доступности",
 
   // "info.accessibility-settings.submit": "Save accessibility settings",
-  // TODO New key - Add a translation
-  "info.accessibility-settings.submit": "Save accessibility settings",
+  "info.accessibility-settings.submit": "Сохранить настройки доступности",
 
   // "info.accessibility-settings.title": "Accessibility settings",
   // TODO New key - Add a translation
