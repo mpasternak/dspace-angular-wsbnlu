@@ -40,10 +40,6 @@ import { hasValue } from '../shared/empty.util';
 export class FooterComponent implements OnInit {
   dateObj: number = Date.now();
 
-  /**
-   * A boolean representing if to show or not the top footer container
-   */
-  showTopFooter = false;
   showCookieSettings = false;
   showPrivacyPolicy: boolean;
   showEndUserAgreement: boolean;

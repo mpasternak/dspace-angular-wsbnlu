@@ -15,7 +15,12 @@
       "Bash(npm install:*)",
       "Bash(npm run build:prod:*)",
       "WebFetch(domain:duraspace.org)",
-      "Bash(npm ls:*)"
+      "Bash(npm ls:*)",
+      "Bash(sips:*)",
+      "Read(//tmp/**)",
+      "Bash(python3:*)",
+      "Bash(source:*)",
+      "Bash(pip3 install:*)"
     ],
     "deny": [],
     "ask": []
