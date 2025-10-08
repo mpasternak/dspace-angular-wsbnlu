@@ -1971,6 +1971,8 @@
 
   "footer.link.cookies": "Cookie settings",
 
+  "footer.link.cookies-policy": "Cookie Policy",
+
   "footer.link.privacy-policy": "Privacy policy",
 
   "footer.link.end-user-agreement": "End User Agreement",
@@ -2300,6 +2302,14 @@
   "info.privacy.head": "Privacy Statement",
 
   "info.privacy.title": "Privacy Statement",
+
+  "info.cookies": "Cookie Policy",
+
+  "info.cookies.breadcrumbs": "Cookie Policy",
+
+  "info.cookies.head": "WSB-NLU Repository Cookie Policy",
+
+  "info.cookies.title": "Cookie Policy",
 
   "info.feedback.breadcrumbs": "Feedback",
 

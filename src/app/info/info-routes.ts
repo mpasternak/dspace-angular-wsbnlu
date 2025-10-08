@@ -9,11 +9,13 @@ import { notifyInfoGuard } from '../core/coar-notify/notify-info/notify-info.gua
 import { feedbackGuard } from '../core/feedback/feedback.guard';
 import { hasValue } from '../shared/empty.util';
 import { AccessibilitySettingsComponent } from './accessibility-settings/accessibility-settings.component';
+import { ThemedCookiesComponent } from './cookies/themed-cookies.component';
 import { ThemedEndUserAgreementComponent } from './end-user-agreement/themed-end-user-agreement.component';
 import { ThemedFeedbackComponent } from './feedback/themed-feedback.component';
 import {
   ACCESSIBILITY_SETTINGS_PATH,
   COAR_NOTIFY_SUPPORT,
+  COOKIES_PATH,
   END_USER_AGREEMENT_PATH,
   FEEDBACK_PATH,
   PRIVACY_PATH,
@@ -48,6 +50,12 @@ export const ROUTES: Routes = [
     resolve: { breadcrumb: i18nBreadcrumbResolver },
     data: { title: 'info.privacy.title', breadcrumbKey: 'info.privacy' },
   } : undefined,
+  {
+    path: COOKIES_PATH,
+    component: ThemedCookiesComponent,
+    resolve: { breadcrumb: i18nBreadcrumbResolver },
+    data: { title: 'info.cookies.title', breadcrumbKey: 'info.cookies' },
+  },
   environment.info.enableCOARNotifySupport ? {
     path: COAR_NOTIFY_SUPPORT,
     component: NotifyInfoComponent,

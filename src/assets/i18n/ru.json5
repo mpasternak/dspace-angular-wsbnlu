@@ -3009,6 +3009,9 @@
   // "footer.link.cookies": "Cookie settings",
   "footer.link.cookies": "Настройки файлов cookie",
 
+  // "footer.link.cookies-policy": "Cookie Policy",
+  "footer.link.cookies-policy": "Политика использования файлов cookie",
+
   // "footer.link.privacy-policy": "Privacy policy",
   "footer.link.privacy-policy": "Политика конфиденциальности",
 
@@ -3528,6 +3531,18 @@
 
   // "info.privacy.title": "Privacy Statement",
   "info.privacy.title": "Политика конфиденциальности",
+
+  // "info.cookies": "Cookie Policy",
+  "info.cookies": "Политика использования файлов cookie",
+
+  // "info.cookies.breadcrumbs": "Cookie Policy",
+  "info.cookies.breadcrumbs": "Политика использования файлов cookie",
+
+  // "info.cookies.head": "WSB-NLU Repository Cookie Policy",
+  "info.cookies.head": "Политика использования файлов cookie Репозитория WSB-NLU",
+
+  // "info.cookies.title": "Cookie Policy",
+  "info.cookies.title": "Политика использования файлов cookie",
 
   // "info.feedback.breadcrumbs": "Feedback",
   "info.feedback.breadcrumbs": "Обратная связь",

@@ -20,7 +20,10 @@
       "Read(//tmp/**)",
       "Bash(python3:*)",
       "Bash(source:*)",
-      "Bash(pip3 install:*)"
+      "Bash(pip3 install:*)",
+      "Bash(textutil:*)",
+      "Bash(find:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

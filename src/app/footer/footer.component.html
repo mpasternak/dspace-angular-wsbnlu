@@ -35,18 +35,6 @@
       <!-- Column 3: Settings Links -->
       <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
         <ul class="list-unstyled">
-          @if (showCookieSettings) {
-            <li class="mb-2">
-              <button class="btn btn-link text-white p-0" type="button" (click)="openCookieSettings()">
-                {{ 'footer.link.cookies' | translate }}
-              </button>
-            </li>
-          }
-          <li class="mb-2">
-            <a routerLink="info/accessibility" class="text-white">
-              {{ 'footer.link.accessibility' | translate }}
-            </a>
-          </li>
           @if (showPrivacyPolicy) {
             <li class="mb-2">
               <a routerLink="info/privacy" class="text-white">
@@ -54,6 +42,16 @@
               </a>
             </li>
           }
+          <li class="mb-2">
+            <a routerLink="info/cookies" class="text-white">
+              {{ 'footer.link.cookies-policy' | translate }}
+            </a>
+          </li>
+          <li class="mb-2">
+            <a routerLink="info/accessibility" class="text-white">
+              {{ 'footer.link.accessibility' | translate }}
+            </a>
+          </li>
           @if (showEndUserAgreement) {
             <li class="mb-2">
               <a routerLink="info/end-user-agreement" class="text-white">
@@ -66,6 +64,13 @@
               <a routerLink="info/feedback" class="text-white">
                 {{ 'footer.link.feedback' | translate }}
               </a>
+            </li>
+          }
+          @if (showCookieSettings) {
+            <li class="mb-2">
+              <button class="btn btn-link text-white p-0" type="button" (click)="openCookieSettings()">
+                {{ 'footer.link.cookies' | translate }}
+              </button>
             </li>
           }
         </ul>
