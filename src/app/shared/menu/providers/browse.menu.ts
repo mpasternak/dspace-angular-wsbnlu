@@ -64,7 +64,7 @@ export class BrowseMenuProvider extends AbstractExpandableMenuProvider {
       map((rd: RemoteData<PaginatedList<BrowseDefinition>>) => {
         return [
           ...rd.payload.page
-            .filter((browseDef) => browseDef.id !== 'srsc' && browseDef.id !== 'subject') // Filter out Subject categories and subject browsing
+            .filter((browseDef) => browseDef.id !== 'srsc') // Filter out Subject categories
             .map((browseDef) => {
               return {
                 visible: true,
