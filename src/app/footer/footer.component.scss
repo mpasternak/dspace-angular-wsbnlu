@@ -39,12 +39,11 @@
           font-size: .875em;
 
           &:hover {
-            text-decoration: underline;
+            // Using global animated underline
           }
 
           &:focus {
             box-shadow: none;
-            text-decoration: underline;
           }
 
           &:focus-visible {
