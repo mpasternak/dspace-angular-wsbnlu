@@ -49,8 +49,8 @@ export const browseByGuard: CanActivateFn = (
   const metadataTranslated = translate.instant(`browse.metadata.${id}`);
   return browseDefinition$.pipe(
     switchMap((browseDefinition: BrowseDefinition | undefined) => {
-      // Block subject browsing completely
-      if (id === 'subject' || id === 'srsc') {
+      // Block keywords (srsc) browsing
+      if (id === 'srsc') {
         void router.navigate([PAGE_NOT_FOUND_PATH]);
         return of(false);
       }

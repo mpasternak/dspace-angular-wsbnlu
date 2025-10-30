@@ -114,7 +114,7 @@ export class ComcolPageBrowseByComponent implements OnDestroy, OnInit {
           }
 
           allOptions.push(...browseDefListRD.payload.page
-            .filter((config: BrowseDefinition) => config.id !== 'srsc' && config.id !== 'subject') // Filter out Subject categories and subject browsing
+            .filter((config: BrowseDefinition) => config.id !== 'srsc') // Filter out Subject categories (keywords)
             .map((config: BrowseDefinition) => ({
               id: `browse_${config.id}`,
               label: `browse.comcol.by.${config.id}`,
