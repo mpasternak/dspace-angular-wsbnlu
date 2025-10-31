@@ -55,6 +55,7 @@ import { PaginatedList } from '../data/paginated-list.model';
 import { RemoteData } from '../data/remote-data';
 import { RootDataService } from '../data/root-data.service';
 import { HardRedirectService } from '../services/hard-redirect.service';
+import { LinkHeadService } from '../services/link-head.service';
 import { Bitstream } from '../shared/bitstream.model';
 import { getDownloadableBitstream } from '../shared/bitstream.operators';
 import { BitstreamFormat } from '../shared/bitstream-format.model';
@@ -121,6 +122,7 @@ export class HeadTagService {
     protected rootService: RootDataService,
     protected store: Store<CoreState>,
     protected hardRedirectService: HardRedirectService,
+    protected linkHeadService: LinkHeadService,
     @Inject(APP_CONFIG) protected appConfig: AppConfig,
     protected authorizationService: AuthorizationDataService,
   ) {
@@ -143,6 +145,7 @@ export class HeadTagService {
 
   protected processRouteChange(routeInfo: any): void {
     this.clearMetaTags();
+    this.clearCanonicalTag();
 
     if (hasValue(routeInfo.data.value.dso) && hasValue(routeInfo.data.value.dso.payload)) {
       this.currentObject.next(routeInfo.data.value.dso.payload);
@@ -172,6 +175,8 @@ export class HeadTagService {
   }
 
   protected setDSOMetaTags(): void {
+
+    this.setCanonicalTag();
 
     this.setTitleTag();
     this.setDescriptionTag();
@@ -534,6 +539,28 @@ export class HeadTagService {
         this.meta.removeTag('name=\'' + name + '\'');
       }
       this.store.dispatch(new ClearMetaTagAction());
+    });
+  }
+
+  /**
+   * Remove any existing canonical link tag from the <head>
+   */
+  protected clearCanonicalTag(): void {
+    this.linkHeadService.removeTag('rel="canonical"');
+  }
+
+  /**
+   * Add <link rel="canonical" ... > to the <head> with the current page URL (without query parameters)
+   */
+  protected setCanonicalTag(): void {
+    // Get the current URL without query parameters
+    const urlWithoutParams = this.router.url.split('?')[0];
+    // Combine with the current origin to create the full canonical URL
+    const canonicalUrl = new URLCombiner(this.hardRedirectService.getCurrentOrigin(), urlWithoutParams).toString();
+    // Add the canonical link tag
+    this.linkHeadService.addTag({
+      rel: 'canonical',
+      href: canonicalUrl,
     });
   }
 
