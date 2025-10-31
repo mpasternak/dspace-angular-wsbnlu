@@ -52,7 +52,23 @@ export const APP_ROUTES: Route[] = [
     canActivate: [authBlockingGuard],
     canActivateChild: [ServerCheckGuard],
     children: [
-      { path: '', redirectTo: '/home', pathMatch: 'full' },
+      {
+        path: '',
+        loadChildren: () => import('./home-page/home-page-routes')
+          .then((m) => m.ROUTES),
+        pathMatch: 'full',
+        data: {
+          showBreadcrumbs: false,
+          enableRSS: true,
+          dsoPath: 'site',
+        },
+        providers: [provideSuggestionNotificationsState()],
+        canActivate: [endUserAgreementCurrentUserGuard],
+        resolve: {
+          site: homePageResolver,
+          tracking: viewTrackerResolver,
+        },
+      },
       {
         path: 'reload/:rnd',
         component: ThemedPageNotFoundComponent,
