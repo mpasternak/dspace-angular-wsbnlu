@@ -23,7 +23,8 @@
       "Bash(pip3 install:*)",
       "Bash(textutil:*)",
       "Bash(find:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(git log:*)"
     ],
     "deny": [],
     "ask": []

@@ -89,6 +89,7 @@
               "optimization": true,
               "outputHashing": "all",
               "namedChunks": false,
+              "sourceMap": false,
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -204,6 +205,11 @@
             },
             "production": {
               "sourceMap": false,
+              "outputHashing": "all",
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "aot": true,
               "optimization": true,
               "fileReplacements": [
                 {
