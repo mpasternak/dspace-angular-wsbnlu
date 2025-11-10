@@ -1,10 +1,7 @@
-import 'core-js/es/reflect';
-import 'zone.js';
-import 'reflect-metadata';
-/******************************************************************
- * Load `$localize` - not used for i18n in this project, we use ngx-translate.
- * It's used for localization of dates, numbers, currencies, etc.
- */
+// Server-side polyfills are handled in server.ts (zone.js/node, reflect-metadata)
+// Only import what's needed for SSR
+
+// Angular localize for date/number pipes (used in SSR)
 import '@angular/localize/init';
 
 import { bootstrapApplication } from '@angular/platform-browser';

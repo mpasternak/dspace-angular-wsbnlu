@@ -1,6 +1,5 @@
-import 'zone.js';
-import 'reflect-metadata';
-import 'core-js/es/reflect';
+// Polyfills are now centralized in polyfills.ts
+// No need to duplicate them here
 
 import { enableProdMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
