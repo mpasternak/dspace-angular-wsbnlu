@@ -1,6 +1,9 @@
+import { DOCUMENT } from '@angular/common';
 import {
   Inject,
   Injectable,
+  Renderer2,
+  RendererFactory2,
 } from '@angular/core';
 import {
   Meta,
@@ -60,6 +63,7 @@ import { Bitstream } from '../shared/bitstream.model';
 import { getDownloadableBitstream } from '../shared/bitstream.operators';
 import { BitstreamFormat } from '../shared/bitstream-format.model';
 import { Bundle } from '../shared/bundle.model';
+import { Collection } from '../shared/collection.model';
 import { DSpaceObject } from '../shared/dspace-object.model';
 import { Item } from '../shared/item.model';
 import {
@@ -72,6 +76,7 @@ import {
   ClearMetaTagAction,
 } from './meta-tag.actions';
 import { MetaTagState } from './meta-tag.reducer';
+import { StructuredDataService } from './structured-data.service';
 
 /**
  * The base selector function to select the metaTag section in the store
@@ -112,6 +117,16 @@ export class HeadTagService {
     'application/epub+zip',                                                     // .epub
   ];
 
+  /**
+   * Renderer2 instance for DOM manipulation
+   */
+  private renderer: Renderer2;
+
+  /**
+   * Reference to the structured data script element
+   */
+  private structuredDataScriptElement: HTMLScriptElement;
+
   constructor(
     protected router: Router,
     protected translate: TranslateService,
@@ -125,7 +140,11 @@ export class HeadTagService {
     protected linkHeadService: LinkHeadService,
     @Inject(APP_CONFIG) protected appConfig: AppConfig,
     protected authorizationService: AuthorizationDataService,
+    protected structuredDataService: StructuredDataService,
+    protected rendererFactory: RendererFactory2,
+    @Inject(DOCUMENT) protected document: Document,
   ) {
+    this.renderer = this.rendererFactory.createRenderer(null, null);
   }
 
   public listenForRouteChange(): void {
@@ -146,6 +165,7 @@ export class HeadTagService {
   protected processRouteChange(routeInfo: any): void {
     this.clearMetaTags();
     this.clearCanonicalTag();
+    this.clearStructuredData();
     this.setCanonicalTag();
 
     if (hasValue(routeInfo.data.value.dso) && hasValue(routeInfo.data.value.dso.payload)) {
@@ -197,6 +217,9 @@ export class HeadTagService {
     if (this.isDissertation()) {
       this.setCitationDissertationNameTag();
     }
+
+    // Add structured data for SEO
+    this.setStructuredData();
 
     // this.setCitationJournalTitleTag();
     // this.setCitationVolumeTag();
@@ -560,6 +583,112 @@ export class HeadTagService {
     this.linkHeadService.addTag({
       rel: 'canonical',
       href: canonicalUrl,
+    });
+  }
+
+  /**
+   * Add schema.org structured data in JSON-LD format to the <head>
+   * for Items and Collections to improve SEO
+   */
+  protected setStructuredData(): void {
+    if (!this.currentObject.value) {
+      return;
+    }
+
+    const currentUrl = new URLCombiner(this.hardRedirectService.getCurrentOrigin(), this.router.url.split('?')[0]).toString();
+    let jsonLd = '';
+
+    if (this.currentObject.value instanceof Item) {
+      const item = this.currentObject.value as Item;
+
+      // Get thumbnail URL if available
+      let thumbnailUrl: string;
+      if (item._links?.thumbnail?.href) {
+        thumbnailUrl = new URLCombiner(this.hardRedirectService.getCurrentOrigin(), item._links.thumbnail.href).toString();
+      }
+
+      // Get PDF URL from citation_pdf_url if it's been set
+      // We'll extract it from the meta tag after it's been created
+      let pdfUrl: string;
+      setTimeout(() => {
+        const pdfMetaTag = this.document.querySelector('meta[name="citation_pdf_url"]') as HTMLMetaElement;
+        if (pdfMetaTag?.content) {
+          pdfUrl = pdfMetaTag.content;
+          // Regenerate JSON-LD with PDF URL
+          const jsonLdWithPdf = this.structuredDataService.generateItemStructuredData(item, currentUrl, thumbnailUrl, pdfUrl);
+          if (jsonLdWithPdf) {
+            this.updateStructuredDataScript(jsonLdWithPdf);
+          }
+        }
+      }, 100); // Small delay to ensure citation_pdf_url meta tag has been set
+
+      // Generate initial JSON-LD without PDF URL
+      jsonLd = this.structuredDataService.generateItemStructuredData(item, currentUrl, thumbnailUrl);
+
+    } else if (this.currentObject.value instanceof Collection) {
+      const collection = this.currentObject.value as Collection;
+      jsonLd = this.structuredDataService.generateCollectionStructuredData(collection, currentUrl);
+    }
+
+    if (jsonLd) {
+      this.addStructuredDataScript(jsonLd);
+    }
+  }
+
+  /**
+   * Add a <script type="application/ld+json"> element to the <head>
+   * @param jsonLd The JSON-LD structured data string
+   */
+  protected addStructuredDataScript(jsonLd: string): void {
+    if (!jsonLd) {
+      return;
+    }
+
+    // Create the script element
+    const script = this.renderer.createElement('script');
+    this.renderer.setAttribute(script, 'type', 'application/ld+json');
+    this.renderer.appendChild(script, this.renderer.createText(jsonLd));
+
+    // Store reference to the script element
+    this.structuredDataScriptElement = script;
+
+    // Add to document head
+    this.renderer.appendChild(this.document.head, script);
+  }
+
+  /**
+   * Update the existing structured data script content
+   * @param jsonLd The updated JSON-LD structured data string
+   */
+  protected updateStructuredDataScript(jsonLd: string): void {
+    if (!jsonLd || !this.structuredDataScriptElement) {
+      return;
+    }
+
+    // Clear existing content
+    while (this.structuredDataScriptElement.firstChild) {
+      this.renderer.removeChild(this.structuredDataScriptElement, this.structuredDataScriptElement.firstChild);
+    }
+
+    // Add new content
+    this.renderer.appendChild(this.structuredDataScriptElement, this.renderer.createText(jsonLd));
+  }
+
+  /**
+   * Remove any existing structured data script from the <head>
+   */
+  protected clearStructuredData(): void {
+    if (this.structuredDataScriptElement && this.structuredDataScriptElement.parentNode) {
+      this.renderer.removeChild(this.document.head, this.structuredDataScriptElement);
+      this.structuredDataScriptElement = null;
+    }
+
+    // Also remove any orphaned JSON-LD scripts as a safety measure
+    const existingScripts = this.document.querySelectorAll('script[type="application/ld+json"]');
+    existingScripts.forEach(script => {
+      if (script.parentNode) {
+        this.renderer.removeChild(script.parentNode, script);
+      }
     });
   }
 
