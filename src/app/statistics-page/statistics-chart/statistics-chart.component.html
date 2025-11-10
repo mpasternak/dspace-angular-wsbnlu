@@ -1,0 +1,14 @@
+@if (hasData && hasMultipleDataPoints) {
+  <div class="m-1">
+    <h2 class="m-1">
+      {{ 'statistics.table.title.' + report.reportType | translate }}
+    </h2>
+    <ds-base-chart
+      [data]="chartData"
+      [type]="chartType"
+      [options]="chartOptions"
+      [testId]="report.reportType + '-chart'"
+      height="400px">
+    </ds-base-chart>
+  </div>
+}

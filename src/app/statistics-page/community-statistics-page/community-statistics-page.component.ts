@@ -5,6 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Community } from '../../core/shared/community.model';
 import { ThemedLoadingComponent } from '../../shared/loading/themed-loading.component';
 import { VarDirective } from '../../shared/utils/var.directive';
+import { StatisticsChartComponent } from '../statistics-chart/statistics-chart.component';
 import { StatisticsPageDirective } from '../statistics-page/statistics-page.directive';
 import { StatisticsTableComponent } from '../statistics-table/statistics-table.component';
 
@@ -18,6 +19,7 @@ import { StatisticsTableComponent } from '../statistics-table/statistics-table.c
   standalone: true,
   imports: [
     CommonModule,
+    StatisticsChartComponent,
     StatisticsTableComponent,
     ThemedLoadingComponent,
     TranslateModule,

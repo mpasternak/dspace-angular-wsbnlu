@@ -18,10 +18,16 @@
 
     @if (reports) {
       @for (report of reports; track report) {
-        <ds-statistics-table
-          [report]="report"
-          class="m-2 {{ report.id }}">
-        </ds-statistics-table>
+        <div class="report-container m-2 {{ report.id }}">
+          <ds-statistics-table
+            [report]="report">
+          </ds-statistics-table>
+          <ds-statistics-chart
+            [report]="report"
+            chartType="bar"
+            height="520px">
+          </ds-statistics-chart>
+        </div>
       }
       @if ((hasData$ | async) !== true) {
         <div>

@@ -2235,6 +2235,9 @@
   "statistics.table.title.TotalDownloads": "Pobrania",
   "statistics.table.title.TopCountries": "Wyświetlenia wg krajów",
   "statistics.table.title.TopCities": "Wyświetlenia wg miast",
+
+  "statistics.view.table": "Widok tabeli",
+  "statistics.view.chart": "Widok wykresu",
   "submission.import-external.preview.title": "Podgląd pozycji",
   "submission.import-external.preview.title.none": "Podgląd pozycji",
   "submission.sections.describe.relationship-lookup.external-source.import-button-title.none": "Import pozycji zdalnie",

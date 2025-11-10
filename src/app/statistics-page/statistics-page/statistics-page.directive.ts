@@ -3,6 +3,7 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
+import { ChartType } from 'chart.js';
 import {
   ActivatedRoute,
   Router,
@@ -99,4 +100,6 @@ export abstract class StatisticsPageDirective<T extends DSpaceObject> implements
   getName(scope: DSpaceObject): string {
     return this.nameService.getName(scope);
   }
+
+
 }

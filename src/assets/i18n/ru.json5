@@ -7707,6 +7707,9 @@
   // "statistics.table.title.TopCities": "Top city views",
   "statistics.table.title.TopCities": "Просмотры по городам",
 
+  "statistics.view.table": "Табличный вид",
+  "statistics.view.chart": "Вид графика",
+
   // "statistics.table.header.views": "Views",
   "statistics.table.header.views": "Просмотры",
 

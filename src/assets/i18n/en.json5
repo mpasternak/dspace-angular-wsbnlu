@@ -5056,6 +5056,9 @@
 
   "statistics.table.no-name": "(object name could not be loaded)",
 
+  "statistics.view.table": "Table View",
+  "statistics.view.chart": "Chart View",
+
   "submission.edit.breadcrumbs": "Edit Submission",
 
   "submission.edit.title": "Edit Submission",
