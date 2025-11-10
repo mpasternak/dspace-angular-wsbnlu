@@ -146,6 +146,7 @@ export class HeadTagService {
   protected processRouteChange(routeInfo: any): void {
     this.clearMetaTags();
     this.clearCanonicalTag();
+    this.setCanonicalTag();
 
     if (hasValue(routeInfo.data.value.dso) && hasValue(routeInfo.data.value.dso.payload)) {
       this.currentObject.next(routeInfo.data.value.dso.payload);
@@ -175,8 +176,6 @@ export class HeadTagService {
   }
 
   protected setDSOMetaTags(): void {
-
-    this.setCanonicalTag();
 
     this.setTitleTag();
     this.setDescriptionTag();
