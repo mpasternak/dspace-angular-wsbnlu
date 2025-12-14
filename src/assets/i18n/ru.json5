@@ -8579,8 +8579,14 @@
   // "submission.sections.submit.progressbar.describe.stepcustom": "Describe",
   "submission.sections.submit.progressbar.describe.stepcustom": "Описание",
 
+  // "submission.sections.submit.progressbar.describe.stepfour": "Additional Information",
+  "submission.sections.submit.progressbar.describe.stepfour": "Дополнительная информация",
+
   // "submission.sections.submit.progressbar.describe.stepone": "Describe",
   "submission.sections.submit.progressbar.describe.stepone": "Описание",
+
+  // "submission.sections.submit.progressbar.describe.stepthree": "Abstract",
+  "submission.sections.submit.progressbar.describe.stepthree": "Аннотация",
 
   // "submission.sections.submit.progressbar.describe.steptwo": "Describe",
   "submission.sections.submit.progressbar.describe.steptwo": "Описание",
