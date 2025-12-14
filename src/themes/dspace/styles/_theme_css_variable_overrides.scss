@@ -26,7 +26,12 @@
   --ds-item-page-img-field-default-inline-height: 24px;
   --ds-item-page-img-field-ror-inline-height: var(--ds-item-page-img-field-default-inline-height);
 
-  // Admin sidebar - lighter background for better readability
+  // Admin sidebar palette - lighter background and darker text for better readability
   --ds-admin-sidebar-bg: #f5f5f5;
+  --ds-admin-sidebar-header-bg: #e9edf5;
+  --ds-admin-sidebar-active-bg: #e1e7f0;
+  --ds-admin-sidebar-link-color: #343e63;
+  --ds-admin-sidebar-link-hover-color: #1f2744;
+  --ds-dark-scrollbar-bg: #d8dde6;
+  --ds-dark-scrollbar-alt-bg: #e2e6ee;
 }
-
