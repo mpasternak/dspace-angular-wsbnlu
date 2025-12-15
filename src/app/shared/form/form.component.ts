@@ -373,6 +373,26 @@ export class FormComponent implements OnDestroy, OnInit {
   insertItem($event, arrayContext: DynamicFormArrayModel, index: number): void {
     const formArrayControl = this.formGroup.get(this.formBuilderService.getPath(arrayContext)) as UntypedFormArray;
     this.formBuilderService.insertFormArrayGroup(index, formArrayControl, arrayContext);
+
+    // Set the new row's language to the next available language from the previous row
+    if (index > 0) {
+      const previousModel = arrayContext.groups[index - 1].group[0] as any;
+      const newModel = arrayContext.groups[index].group[0] as any;
+
+      if (previousModel.languageCodes && previousModel.languageCodes.length > 0 &&
+          newModel.languageCodes && newModel.languageCodes.length > 0) {
+        const currentLanguage = previousModel.language;
+        const languageCodes = previousModel.languageCodes;
+        const currentIndex = languageCodes.findIndex((lc: any) => lc.code === currentLanguage);
+
+        if (currentIndex !== -1) {
+          // If there's a next language, use it; otherwise stay at current (last) language
+          const nextIndex = Math.min(currentIndex + 1, languageCodes.length - 1);
+          newModel.language = languageCodes[nextIndex].code;
+        }
+      }
+    }
+
     this.addArrayItem.emit(this.getEvent($event, arrayContext, index, 'add'));
     this.formService.changeForm(this.formId, this.formModel);
   }
