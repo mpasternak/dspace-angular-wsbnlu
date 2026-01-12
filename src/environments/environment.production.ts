@@ -7,7 +7,7 @@ export const environment: Partial<BuildConfig> = {
   ssr: {
     enabled: true,
     enablePerformanceProfiler: false,
-    inlineCriticalCss: false,
+    inlineCriticalCss: true,
     transferState: true,
     replaceRestUrl: true,
     excludePathPatterns: [

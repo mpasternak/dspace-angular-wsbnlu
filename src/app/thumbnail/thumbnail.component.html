@@ -14,6 +14,10 @@
          [class.d-none]="isLoading()"
          [src]="src() | dsSafeUrl"
          [alt]="alt | translate"
+         width="210"
+         height="297"
+         loading="lazy"
+         decoding="async"
          (error)="errorHandler()"
          (load)="successHandler()"/>
   }

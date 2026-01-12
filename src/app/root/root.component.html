@@ -12,13 +12,12 @@
     <ds-header-navbar-wrapper></ds-header-navbar-wrapper>
     <ds-breadcrumbs></ds-breadcrumbs>
     <main class="my-cs" id="main-content">
-
-      @if (shouldShowRouteLoader) {
+      <div class="route-loader-overlay" [class.route-loader-hidden]="!shouldShowRouteLoader">
         <div class="container d-flex justify-content-center align-items-center h-100">
-          <ds-loading [showMessage]="false"></ds-loading>
+          <ds-loading [showMessage]="false" [spinner]="true"></ds-loading>
         </div>
-      }
-      <div [class.d-none]="shouldShowRouteLoader">
+      </div>
+      <div [class.invisible]="shouldShowRouteLoader">
         <router-outlet></router-outlet>
       </div>
     </main>

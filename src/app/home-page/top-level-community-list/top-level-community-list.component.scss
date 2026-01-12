@@ -1,0 +1,6 @@
+// Reserve minimum height to prevent CLS when loading state changes to content
+:host {
+  display: block;
+  min-height: 300px;
+  contain: layout;
+}

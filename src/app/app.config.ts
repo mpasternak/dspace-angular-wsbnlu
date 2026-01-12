@@ -8,7 +8,6 @@ import {
   importProvidersFrom,
 } from '@angular/core';
 import {
-  NoPreloading,
   provideRouter,
   withComponentInputBinding,
   withEnabledBlockingInitialNavigation,
@@ -16,6 +15,8 @@ import {
   withPreloading,
   withRouterConfig,
 } from '@angular/router';
+
+import { SelectivePreloadingStrategy } from './core/preloading/selective-preloading.strategy';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DYNAMIC_MATCHER_PROVIDERS } from '@ng-dynamic-forms/core';
 import { EffectsModule } from '@ngrx/effects';
@@ -111,7 +112,7 @@ export const commonAppConfig: ApplicationConfig = {
       withRouterConfig(APP_ROUTING_CONF),
       withInMemoryScrolling(APP_ROUTING_SCROLL_CONF),
       withEnabledBlockingInitialNavigation(),
-      withPreloading(NoPreloading),
+      withPreloading(SelectivePreloadingStrategy),
       withComponentInputBinding(),
     ),
     {

@@ -32,6 +32,10 @@
     }
 
     ul {
+      // Reserve minimum height for lists to prevent CLS from conditional items
+      min-height: 120px;
+      contain: layout;
+
       li {
         a, button {
           color: inherit;

@@ -24,7 +24,8 @@
       "Bash(textutil:*)",
       "Bash(find:*)",
       "Bash(cat:*)",
-      "Bash(git log:*)"
+      "Bash(git log:*)",
+      "Bash(identify:*)"
     ],
     "deny": [],
     "ask": []

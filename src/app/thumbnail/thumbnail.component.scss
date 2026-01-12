@@ -4,6 +4,9 @@
 
 img {
   max-width: 100%;
+  height: auto;
+  aspect-ratio: 210 / 297;
+  object-fit: contain;
 }
 
 .outer {  // .outer/.inner generated ~ https://ratiobuddy.com/

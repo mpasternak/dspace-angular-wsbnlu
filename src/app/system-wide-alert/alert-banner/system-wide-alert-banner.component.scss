@@ -1,0 +1,6 @@
+// CSS containment to prevent layout shifts
+:host {
+  display: block;
+  min-height: 0;
+  contain: layout;
+}
