@@ -28,6 +28,7 @@
 
 ds-footer {
   flex-shrink: 0;
+  contain: layout style;
 }
 
 // Main content fills available space, footer stays at bottom

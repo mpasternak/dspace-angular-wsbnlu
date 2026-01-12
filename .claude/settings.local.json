@@ -25,7 +25,10 @@
       "Bash(find:*)",
       "Bash(cat:*)",
       "Bash(git log:*)",
-      "Bash(identify:*)"
+      "Bash(identify:*)",
+      "Bash(unzip:*)",
+      "Skill(angular-pagespeed-optimizer)",
+	"mcp__plugin_playwright_playwright__*",browser_wait_for",
     ],
     "deny": [],
     "ask": []

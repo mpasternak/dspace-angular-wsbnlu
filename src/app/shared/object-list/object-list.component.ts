@@ -28,7 +28,7 @@ import { BrowserOnlyPipe } from '../utils/browser-only.pipe';
 import { SelectableListService } from './selectable-list/selectable-list.service';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.Emulated,
   selector: 'ds-base-object-list',
   styleUrls: ['./object-list.component.scss'],

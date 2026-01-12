@@ -47,7 +47,7 @@ import { PaginationComponentOptions } from '../pagination/pagination-component-o
 import { BrowserOnlyPipe } from '../utils/browser-only.pipe';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.Emulated,
   selector: 'ds-object-grid',
   styleUrls: ['./object-grid.component.scss'],

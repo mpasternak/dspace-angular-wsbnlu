@@ -1,3 +1,9 @@
+:host {
+  display: block;
+  min-height: 600px;
+  contain: layout style;
+}
+
 :host ::ng-deep {
   .filter-badge-skeleton {
     ngx-skeleton-loader .skeleton-loader {
