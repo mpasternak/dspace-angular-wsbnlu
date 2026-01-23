@@ -37,6 +37,7 @@
             "main": "src/main.browser.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "aot": true,
             "assets": [
               "src/assets",
               "src/robots.txt"
@@ -89,6 +90,7 @@
               "outputHashing": "all",
               "namedChunks": false,
               "sourceMap": false,
+              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -207,6 +209,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "aot": true,
               "optimization": true,
               "fileReplacements": [
                 {
