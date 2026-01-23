@@ -243,6 +243,8 @@ export class ThumbnailComponent implements OnChanges {
    * Stop the loading animation once the thumbnail is successfully loaded
    */
   successHandler() {
+    // 🔍 DEBUG: Log success
+    console.log('[ThumbnailComponent] successHandler - image loaded successfully:', this.src());
     this.isLoading.set(false);
   }
 }
