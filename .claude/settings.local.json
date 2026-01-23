@@ -28,7 +28,7 @@
       "Bash(identify:*)",
       "Bash(unzip:*)",
       "Skill(angular-pagespeed-optimizer)",
-	"mcp__plugin_playwright_playwright__*",browser_wait_for",
+      "mcp__plugin_playwright_playwright__*"
     ],
     "deny": [],
     "ask": []

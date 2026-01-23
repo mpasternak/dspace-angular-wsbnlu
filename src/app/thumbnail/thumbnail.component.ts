@@ -165,6 +165,13 @@ export class ThumbnailComponent implements OnChanges {
     const thumbnail = this.bitstream;
     const thumbnailSrc = thumbnail?._links?.content?.href;
 
+    // 🔍 DEBUG: Log error handler
+    console.group('[ThumbnailComponent] errorHandler');
+    console.log('Failed to load image:', src);
+    console.log('thumbnailSrc:', thumbnailSrc);
+    console.log('retriedWithToken:', this.retriedWithToken);
+    console.groupEnd();
+
     if (!this.retriedWithToken && hasValue(thumbnailSrc) && src === thumbnailSrc) {
       // the thumbnail may have failed to load because it's restricted
       //   → retry with an authorization token
