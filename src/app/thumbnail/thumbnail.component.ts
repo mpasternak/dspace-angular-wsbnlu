@@ -96,42 +96,17 @@ export class ThumbnailComponent implements OnChanges {
    */
   ngOnChanges(changes: SimpleChanges): void {
     if (isPlatformBrowser(this.platformID)) {
-      // 🔍 DEBUG LOGGING START
-      console.group('[ThumbnailComponent] ngOnChanges');
-      console.log('thumbnail input:', this.thumbnail);
-      console.log('thumbnail type:', this.thumbnail?.constructor?.name);
-
-      if (this.thumbnail instanceof Bitstream) {
-        console.log('Bitstream _links:', (this.thumbnail as Bitstream)._links);
-        console.log('Bitstream content href:', (this.thumbnail as Bitstream)._links?.content?.href);
-      } else if (this.thumbnail instanceof RemoteData) {
-        console.log('RemoteData hasSucceeded:', this.thumbnail.hasSucceeded);
-        console.log('RemoteData payload:', this.thumbnail.payload);
-        if (this.thumbnail.payload) {
-          console.log('Payload _links:', this.thumbnail.payload._links);
-          console.log('Payload content href:', this.thumbnail.payload._links?.content?.href);
-        }
-      }
-      // 🔍 DEBUG LOGGING END
-
       if (hasNoValue(this.thumbnail)) {
-        console.log('thumbnail is null/undefined - using defaultImage');
-        console.groupEnd();
         this.setSrc(this.defaultImage);
         return;
       }
 
       const src = this.contentHref;
-      console.log('extracted contentHref:', src);
-
       if (hasValue(src)) {
-        console.log('using extracted src');
         this.setSrc(src);
       } else {
-        console.log('contentHref is null - using defaultImage');
         this.setSrc(this.defaultImage);
       }
-      console.groupEnd();
     }
   }
 
@@ -164,13 +139,6 @@ export class ThumbnailComponent implements OnChanges {
     const src = this.src();
     const thumbnail = this.bitstream;
     const thumbnailSrc = thumbnail?._links?.content?.href;
-
-    // 🔍 DEBUG: Log error handler
-    console.group('[ThumbnailComponent] errorHandler');
-    console.log('Failed to load image:', src);
-    console.log('thumbnailSrc:', thumbnailSrc);
-    console.log('retriedWithToken:', this.retriedWithToken);
-    console.groupEnd();
 
     if (!this.retriedWithToken && hasValue(thumbnailSrc) && src === thumbnailSrc) {
       // the thumbnail may have failed to load because it's restricted
@@ -243,8 +211,6 @@ export class ThumbnailComponent implements OnChanges {
    * Stop the loading animation once the thumbnail is successfully loaded
    */
   successHandler() {
-    // 🔍 DEBUG: Log success
-    console.log('[ThumbnailComponent] successHandler - image loaded successfully:', this.src());
     this.isLoading.set(false);
   }
 }
