@@ -11,7 +11,7 @@
   <!-- don't use *ngIf="!isLoading" so the thumbnail can load in while the animation is playing -->
   @if (src() !== null) {
     <img class="thumbnail-content img-fluid"
-         [class.d-none]="isLoading()"
+         [style.visibility]="isLoading() ? 'hidden' : 'visible'"
          [src]="src() | dsSafeUrl"
          [alt]="alt | translate"
          width="210"
