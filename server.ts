@@ -146,8 +146,9 @@ export function app() {
    */
   server.get('/robots.txt', (req, res) => {
     res.setHeader('content-type', 'text/plain');
+    const proto = req.get('X-Forwarded-Proto') || req.protocol;
     res.render('assets/robots.txt.ejs', {
-      'origin': req.protocol + '://' + req.headers.host,
+      'origin': proto + '://' + req.headers.host,
     });
   });
 

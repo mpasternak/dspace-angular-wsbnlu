@@ -338,10 +338,7 @@ export class HeadTagService {
    */
   protected setCitationAbstractUrlTag(): void {
     if (this.currentObject.value instanceof Item) {
-      let url = this.getMetaTagValue('dc.identifier.uri');
-      if (hasNoValue(url)) {
-        url = new URLCombiner(this.hardRedirectService.getCurrentOrigin(), this.router.url).toString();
-      }
+      const url = new URLCombiner(this.hardRedirectService.getCurrentOrigin(), this.router.url).toString();
       this.addMetaTag('citation_abstract_html_url', url);
     }
   }
@@ -604,7 +601,8 @@ export class HeadTagService {
       // Get thumbnail URL if available
       let thumbnailUrl: string;
       if (item._links?.thumbnail?.href) {
-        thumbnailUrl = new URLCombiner(this.hardRedirectService.getCurrentOrigin(), item._links.thumbnail.href).toString();
+        const href = item._links.thumbnail.href;
+        thumbnailUrl = href.startsWith('http') ? href : new URLCombiner(this.hardRedirectService.getCurrentOrigin(), href).toString();
       }
 
       // Get PDF URL from citation_pdf_url if it's been set
