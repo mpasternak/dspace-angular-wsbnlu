@@ -181,7 +181,10 @@ export function app() {
    */
   router.use('/bitstreams/:id/download', createProxyMiddleware({
     target: `${REST_BASE_URL}`,
-    pathRewrite: (path) => path.replace(/\/bitstreams\/([^/]+)\/download/, '/api/core/bitstreams/$1/content'),
+    pathRewrite: (path) => {
+      const match = path.match(/\/bitstreams\/([^/]+)\/download/);
+      return match ? `/api/core/bitstreams/${match[1]}/content` : path;
+    },
     changeOrigin: true,
   }));
 
