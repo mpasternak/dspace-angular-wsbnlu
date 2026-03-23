@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import {
+  ExperimentalPendingTasks,
   Inject,
   Injectable,
   Renderer2,
@@ -31,6 +32,7 @@ import {
 } from 'rxjs';
 import {
   filter,
+  finalize,
   map,
   mergeMap,
   switchMap,
@@ -143,6 +145,7 @@ export class HeadTagService {
     protected structuredDataService: StructuredDataService,
     protected rendererFactory: RendererFactory2,
     @Inject(DOCUMENT) protected document: Document,
+    protected pendingTasks: ExperimentalPendingTasks,
   ) {
     this.renderer = this.rendererFactory.createRenderer(null, null);
   }
@@ -221,19 +224,11 @@ export class HeadTagService {
     // Add structured data for SEO
     this.setStructuredData();
 
-    // this.setCitationJournalTitleTag();
-    // this.setCitationVolumeTag();
-    // this.setCitationIssueTag();
-    // this.setCitationFirstPageTag();
-    // this.setCitationLastPageTag();
-    // this.setCitationPMIDTag();
-
-    // this.setCitationFullTextTag();
-
-    // this.setCitationConferenceTag();
-
-    // this.setCitationPatentCountryTag();
-    // this.setCitationPatentNumberTag();
+    this.setCitationJournalTitleTag();
+    this.setCitationVolumeTag();
+    this.setCitationIssueTag();
+    this.setCitationFirstPageTag();
+    this.setCitationLastPageTag();
 
   }
 
@@ -356,11 +351,56 @@ export class HeadTagService {
   }
 
   /**
+   * Add <meta name="citation_journal_title" ... >  to the <head>
+   */
+  protected setCitationJournalTitleTag(): void {
+    const value = this.getFirstMetaTagValue(['dc.relation.ispartof', 'dc.source']);
+    this.addMetaTag('citation_journal_title', value);
+  }
+
+  /**
+   * Add <meta name="citation_volume" ... >  to the <head>
+   */
+  protected setCitationVolumeTag(): void {
+    const value = this.getFirstMetaTagValue(['dc.bibliographicCitation.volume', 'dc.citation.volume']);
+    this.addMetaTag('citation_volume', value);
+  }
+
+  /**
+   * Add <meta name="citation_issue" ... >  to the <head>
+   */
+  protected setCitationIssueTag(): void {
+    const value = this.getFirstMetaTagValue(['dc.bibliographicCitation.issue', 'dc.citation.issue']);
+    this.addMetaTag('citation_issue', value);
+  }
+
+  /**
+   * Add <meta name="citation_firstpage" ... >  to the <head>
+   */
+  protected setCitationFirstPageTag(): void {
+    const value = this.getFirstMetaTagValue(['dc.bibliographicCitation.firstPage', 'dc.citation.spage']);
+    this.addMetaTag('citation_firstpage', value);
+  }
+
+  /**
+   * Add <meta name="citation_lastpage" ... >  to the <head>
+   */
+  protected setCitationLastPageTag(): void {
+    const value = this.getFirstMetaTagValue(['dc.bibliographicCitation.lastPage', 'dc.citation.epage']);
+    this.addMetaTag('citation_lastpage', value);
+  }
+
+  /**
    * Add <meta name="citation_pdf_url" ... >  to the <head>
    */
   protected setCitationPdfUrlTag(): void {
     if (this.currentObject.value instanceof Item) {
       const item = this.currentObject.value as Item;
+
+      // Signal Angular SSR to wait for this async operation before serializing HTML.
+      // Without this, citation_pdf_url would be missing from SSR output because the
+      // bitstream data fetch completes after HTML serialization.
+      const taskCleanup = this.pendingTasks.add();
 
       // Retrieve the ORIGINAL bundle for the item
       this.bundleDataService.findByItemAndName(
@@ -416,6 +456,7 @@ export class HeadTagService {
           }
         }),
         take(1),
+        finalize(() => taskCleanup()),
       ).subscribe((link: string) => {
         // Use the found link to set the <meta> tag
         this.addMetaTag(
@@ -605,22 +646,9 @@ export class HeadTagService {
         thumbnailUrl = href.startsWith('http') ? href : new URLCombiner(this.hardRedirectService.getCurrentOrigin(), href).toString();
       }
 
-      // Get PDF URL from citation_pdf_url if it's been set
-      // We'll extract it from the meta tag after it's been created
-      let pdfUrl: string;
-      setTimeout(() => {
-        const pdfMetaTag = this.document.querySelector('meta[name="citation_pdf_url"]') as HTMLMetaElement;
-        if (pdfMetaTag?.content) {
-          pdfUrl = pdfMetaTag.content;
-          // Regenerate JSON-LD with PDF URL
-          const jsonLdWithPdf = this.structuredDataService.generateItemStructuredData(item, currentUrl, thumbnailUrl, pdfUrl);
-          if (jsonLdWithPdf) {
-            this.updateStructuredDataScript(jsonLdWithPdf);
-          }
-        }
-      }, 100); // Small delay to ensure citation_pdf_url meta tag has been set
-
-      // Generate initial JSON-LD without PDF URL
+      // Generate JSON-LD without PDF URL. Google Scholar uses citation_* meta tags
+      // (not JSON-LD), so the PDF URL in JSON-LD is not critical. The citation_pdf_url
+      // meta tag is handled separately by setCitationPdfUrlTag() with proper SSR waiting.
       jsonLd = this.structuredDataService.generateItemStructuredData(item, currentUrl, thumbnailUrl);
 
     } else if (this.currentObject.value instanceof Collection) {

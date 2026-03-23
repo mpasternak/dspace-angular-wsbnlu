@@ -1,4 +1,9 @@
 import {
+  ExperimentalPendingTasks,
+  Renderer2,
+  RendererFactory2,
+} from '@angular/core';
+import {
   fakeAsync,
   tick,
 } from '@angular/core/testing';
@@ -18,6 +23,8 @@ import {
 } from 'rxjs';
 
 import { AppConfig } from '../../../config/app-config.interface';
+import { LinkHeadService } from '../services/link-head.service';
+import { StructuredDataService } from './structured-data.service';
 import {
   ItemMock,
   MockBitstream1,
@@ -60,6 +67,11 @@ describe('HeadTagService', () => {
   let translateService: TranslateService;
   let hardRedirectService: HardRedirectService;
   let authorizationService: AuthorizationDataService;
+  let linkHeadService: LinkHeadService;
+  let structuredDataService: StructuredDataService;
+  let rendererFactory: RendererFactory2;
+  let mockRenderer: Renderer2;
+  let pendingTasks: ExperimentalPendingTasks;
 
   let router: Router;
   let store;
@@ -112,6 +124,19 @@ describe('HeadTagService', () => {
       },
     } as any;
 
+    linkHeadService = jasmine.createSpyObj('linkHeadService', ['addTag', 'removeTag']);
+    structuredDataService = jasmine.createSpyObj('structuredDataService', {
+      generateItemStructuredData: '{}',
+      generateCollectionStructuredData: '{}',
+    });
+    mockRenderer = jasmine.createSpyObj('renderer', ['createElement', 'setAttribute', 'appendChild', 'removeChild', 'createText']);
+    rendererFactory = jasmine.createSpyObj('rendererFactory', {
+      createRenderer: mockRenderer,
+    });
+    pendingTasks = jasmine.createSpyObj('pendingTasks', {
+      add: () => {},
+    });
+
     headTagService = new HeadTagService(
       router,
       translateService,
@@ -122,8 +147,13 @@ describe('HeadTagService', () => {
       rootService,
       store,
       hardRedirectService,
+      linkHeadService,
       appConfig,
       authorizationService,
+      structuredDataService,
+      rendererFactory,
+      document,
+      pendingTasks,
     );
   });
 
