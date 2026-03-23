@@ -176,6 +176,16 @@ export function app() {
   }));
 
   /**
+   * Redirect bitstream downloads directly to REST API content endpoint.
+   * This avoids SSR rendering the download page (which returns HTML instead of the file).
+   */
+  router.get('/bitstreams/:id/download', (req, res) => {
+    const bitstreamId = req.params.id;
+    const restUrl = `${REST_BASE_URL}/api/core/bitstreams/${bitstreamId}/content`;
+    res.redirect(302, restUrl);
+  });
+
+  /**
    * Checks if the rateLimiter property is present
    * When it is present, the rateLimiter will be enabled. When it is undefined, the rateLimiter will be disabled.
    */
