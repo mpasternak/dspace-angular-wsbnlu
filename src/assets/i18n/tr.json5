@@ -2852,10 +2852,19 @@
 
   // "cookies.consent.content-notice.description": "We collect and process your personal information for the following purposes: {purposes}",
   // TODO Source message changed - Revise the translation
-  "cookies.consent.content-notice.description": "Kişisel bilgilerinizi aşağıdaki amaçlarla topluyor ve işleriz: <strong>Kimlik Doğrulama, Tercihler, Onay ve İstatistikler</strong>. <br/> Daha fazla bilgi için, lütfen okuyun {privacyPolicy}.",
+  "cookies.consent.content-notice.description": "Kişisel bilgilerinizi aşağıdaki amaçlarla topluyor ve işleriz: {purposes}",
 
   // "cookies.consent.content-notice.learnMore": "Customize",
   "cookies.consent.content-notice.learnMore": "Özelleştir",
+
+  // "cookies.consent.content-notice.privacy-policy.name": "privacy policy",
+  "cookies.consent.content-notice.privacy-policy.name": "Gizlilik Politikası",
+
+  // "cookies.consent.content-notice.privacy-policy.text": ". To learn more, please read our {privacyPolicy}.",
+  "cookies.consent.content-notice.privacy-policy.text": ". Daha fazla bilgi için, lütfen okuyun {privacyPolicy}.",
+
+  // "cookies.consent.content-notice.no-privacy-policy.text": ".",
+  "cookies.consent.content-notice.no-privacy-policy.text": ".",
 
   // "cookies.consent.content-modal.description": "Here you can see and customize the information that we collect about you.",
   "cookies.consent.content-modal.description": "Burada, sizin hakkınızda topladığımız bilgileri görebilir ve özelleştirebilirsiniz.",

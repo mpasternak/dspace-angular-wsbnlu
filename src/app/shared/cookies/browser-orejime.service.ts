@@ -122,6 +122,7 @@ export class BrowserOrejimeService extends OrejimeService {
   initialize() {
     if (!environment.info.enablePrivacyStatement) {
       this.orejimeConfig.translations.zz.consentModal.privacyPolicy.text = 'cookies.consent.content-modal.no-privacy-policy.text';
+      this.orejimeConfig.translations.zz.consentNotice.privacyPolicy.text = 'cookies.consent.content-notice.no-privacy-policy.text';
     }
 
     const hideGoogleAnalytics$ = this.configService.findByPropertyName(this.GOOGLE_ANALYTICS_KEY).pipe(

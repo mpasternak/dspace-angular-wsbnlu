@@ -1641,6 +1641,17 @@
 
   "cookies.consent.content-notice.learnMore": "Customize",
 
+  "cookies.consent.content-notice.privacy-policy.name": "privacy policy",
+
+  // NOTE: the leading ". " is intentional. Orejime's consent notice renders `description` and
+  // `privacyPolicy.text` back-to-back inside one <p> with no separator (unlike the modal, which
+  // injects a  ). Keeping the sentence break here means `description` stays unchanged in every
+  // language pack. See consent-notice.js in the orejime package.
+  "cookies.consent.content-notice.privacy-policy.text": ". To learn more, please read our {privacyPolicy}.",
+
+  // Terminates the description sentence when the privacy statement is disabled.
+  "cookies.consent.content-notice.no-privacy-policy.text": ".",
+
   "cookies.consent.content-modal.description": "Here you can see and customize the information that we collect about you.",
 
   "cookies.consent.content-modal.privacy-policy.name": "privacy policy",

@@ -553,11 +553,17 @@
   "cookies.consent.update": "Od ostatniej wizyty zostały wprowadzone zmiany. Zweryfikuj swoje zgody.",
   "cookies.consent.close": "Zamknij",
   "cookies.consent.decline": "Odrzuć",
-  "cookies.consent.content-notice.description": "Zbieramy i przetwarzamy Twoje dane do następujących celów: <strong>weryfikacja, preferencje, zgody i statystyka</strong>. <br/> Jeśli chcesz się dowiedzieć więcej, przycztaj naszą {privacyPolicy}.",
+  "cookies.consent.content-notice.description": "Zbieramy i przetwarzamy Twoje dane do następujących celów: {purposes}",
   "cookies.consent.content-notice.learnMore": "Dostosuj",
+  "cookies.consent.content-notice.privacy-policy.name": "politykę prywatności",
+  // NOTE: wiodące ". " jest celowe — banner Orejime skleja `description` i `privacyPolicy.text`
+  // w jednym <p> bez separatora (modal wstawia  , banner nic). Patrz consent-notice.js w paczce orejime.
+  "cookies.consent.content-notice.privacy-policy.text": ". Jeśli chcesz się dowiedzieć więcej, przeczytaj naszą {privacyPolicy}.",
+  // Domyka zdanie z `description`, gdy polityka prywatności jest wyłączona.
+  "cookies.consent.content-notice.no-privacy-policy.text": ".",
   "cookies.consent.content-modal.description": "Tutaj są wyświetlane informacje, które zbieramy o Tobie. Możesz je dostosować według swojego uznania.",
-  "cookies.consent.content-modal.privacy-policy.name": "polityka prywatności",
-  "cookies.consent.content-modal.privacy-policy.text": "Aby dowiedzieć się więcej przeczytaj naszą {privacyPolicy}.",
+  "cookies.consent.content-modal.privacy-policy.name": "politykę prywatności",
+  "cookies.consent.content-modal.privacy-policy.text": "Aby dowiedzieć się więcej, przeczytaj naszą {privacyPolicy}.",
   "cookies.consent.content-modal.title": "Informacje, które zbieramy",
   "cookies.consent.app.title.authentication": "Logowanie",
   "cookies.consent.app.description.authentication": "Musisz się zalogować",

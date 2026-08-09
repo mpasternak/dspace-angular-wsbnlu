@@ -95,6 +95,10 @@ export function getOrejimeConfiguration(_window: NativeWindowRef): any {
           changeDescription: 'cookies.consent.update',
           description: 'cookies.consent.content-notice.description',
           learnMore: 'cookies.consent.content-notice.learnMore',
+          privacyPolicy: {
+            name: 'cookies.consent.content-notice.privacy-policy.name',
+            text: 'cookies.consent.content-notice.privacy-policy.text',
+          },
         },
         decline: 'cookies.consent.decline',
         declineAll: 'cookies.consent.decline-all',

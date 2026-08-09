@@ -2493,10 +2493,19 @@
 
   // "cookies.consent.content-notice.description": "We collect and process your personal information for the following purposes: {purposes}",
   // TODO Source message changed - Revise the translation
-  "cookies.consent.content-notice.description": "Мы собираем и обрабатываем вашу личную информацию для следующих целей: <strong>Аутентификация, Предпочтения, Подтверждение и Статистика</strong>. <br/> Подробнее см. в нашей {privacyPolicy}.",
+  "cookies.consent.content-notice.description": "Мы собираем и обрабатываем вашу личную информацию для следующих целей: {purposes}",
 
   // "cookies.consent.content-notice.learnMore": "Customize",
   "cookies.consent.content-notice.learnMore": "Настроить",
+
+  // "cookies.consent.content-notice.privacy-policy.name": "privacy policy",
+  "cookies.consent.content-notice.privacy-policy.name": "политика конфиденциальности",
+
+  // "cookies.consent.content-notice.privacy-policy.text": ". To learn more, please read our {privacyPolicy}.",
+  "cookies.consent.content-notice.privacy-policy.text": ". Подробнее см. в нашей {privacyPolicy}.",
+
+  // "cookies.consent.content-notice.no-privacy-policy.text": ".",
+  "cookies.consent.content-notice.no-privacy-policy.text": ".",
 
   // "cookies.consent.content-modal.description": "Here you can see and customize the information that we collect about you.",
   "cookies.consent.content-modal.description": "Здесь вы можете просмотреть и настроить информацию, которую мы собираем о вас.",

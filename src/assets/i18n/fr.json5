@@ -2531,10 +2531,19 @@
 
   // "cookies.consent.content-notice.description": "We collect and process your personal information for the following purposes: {purposes}",
   // TODO Source message changed - Revise the translation
-  "cookies.consent.content-notice.description": "Vos données personnelles sont récupérées et utilisées dans les contextes suivants : <strong>authentification, préférences, consentement et statistiques</strong>. <br/> Pour plus d'informations, veuillez vous référer à la {privacyPolicy}.",
+  "cookies.consent.content-notice.description": "Vos données personnelles sont récupérées et utilisées dans les contextes suivants : {purposes}",
 
   // "cookies.consent.content-notice.learnMore": "Customize",
   "cookies.consent.content-notice.learnMore": "Personnaliser",
+
+  // "cookies.consent.content-notice.privacy-policy.name": "privacy policy",
+  "cookies.consent.content-notice.privacy-policy.name": "politique de protection de la vie privée",
+
+  // "cookies.consent.content-notice.privacy-policy.text": ". To learn more, please read our {privacyPolicy}.",
+  "cookies.consent.content-notice.privacy-policy.text": ". Pour plus d'informations, veuillez vous référer à la {privacyPolicy}.",
+
+  // "cookies.consent.content-notice.no-privacy-policy.text": ".",
+  "cookies.consent.content-notice.no-privacy-policy.text": ".",
 
   // "cookies.consent.content-modal.description": "Here you can see and customize the information that we collect about you.",
   "cookies.consent.content-modal.description": "Vous pouvez voir et personnaliser ici les données que nous recueillons à votre sujet.",

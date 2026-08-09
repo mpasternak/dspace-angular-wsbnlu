@@ -2761,10 +2761,19 @@
 
   // "cookies.consent.content-notice.description": "We collect and process your personal information for the following purposes: {purposes}",
   // TODO Source message changed - Revise the translation
-  "cookies.consent.content-notice.description": "Vi samlar in och hanterar dina persondata för följande syften: <strong>Autenticering, inställningar, godkännanden och statistik</strong>. <br/> För mer information, läs {privacyPolicy}.",
+  "cookies.consent.content-notice.description": "Vi samlar in och hanterar dina persondata för följande syften: {purposes}",
 
   // "cookies.consent.content-notice.learnMore": "Customize",
   "cookies.consent.content-notice.learnMore": "Anpassa",
+
+  // "cookies.consent.content-notice.privacy-policy.name": "privacy policy",
+  "cookies.consent.content-notice.privacy-policy.name": "personuppgifter och cookies",
+
+  // "cookies.consent.content-notice.privacy-policy.text": ". To learn more, please read our {privacyPolicy}.",
+  "cookies.consent.content-notice.privacy-policy.text": ". För mer information, läs {privacyPolicy}.",
+
+  // "cookies.consent.content-notice.no-privacy-policy.text": ".",
+  "cookies.consent.content-notice.no-privacy-policy.text": ".",
 
   // "cookies.consent.content-modal.description": "Here you can see and customize the information that we collect about you.",
   "cookies.consent.content-modal.description": "Se och anpassa den information som vi samlar in.",

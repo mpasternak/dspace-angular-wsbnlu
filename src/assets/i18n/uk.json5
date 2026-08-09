@@ -2870,10 +2870,19 @@
 
   // "cookies.consent.content-notice.description": "We collect and process your personal information for the following purposes: {purposes}",
   // TODO Source message changed - Revise the translation
-  "cookies.consent.content-notice.description": "Ми збираємо та обробляємо вашу особисту інформацію для таких цілей: <strong>автентифікація, налаштування та статистика</strong>. <br/> Щоб дізнатися більше, прочитайте нашу політику {privacyPolicy}.",
+  "cookies.consent.content-notice.description": "Ми збираємо та обробляємо вашу особисту інформацію для таких цілей: {purposes}",
 
   // "cookies.consent.content-notice.learnMore": "Customize",
   "cookies.consent.content-notice.learnMore": "Налаштувати",
+
+  // "cookies.consent.content-notice.privacy-policy.name": "privacy policy",
+  "cookies.consent.content-notice.privacy-policy.name": "політика приватності",
+
+  // "cookies.consent.content-notice.privacy-policy.text": ". To learn more, please read our {privacyPolicy}.",
+  "cookies.consent.content-notice.privacy-policy.text": ". Щоб дізнатися більше, прочитайте нашу політику {privacyPolicy}.",
+
+  // "cookies.consent.content-notice.no-privacy-policy.text": ".",
+  "cookies.consent.content-notice.no-privacy-policy.text": ".",
 
   // "cookies.consent.content-modal.description": "Here you can see and customize the information that we collect about you.",
   "cookies.consent.content-modal.description": "Тут ви можете переглянути та налаштувати збір інформаціїпро Вас.",

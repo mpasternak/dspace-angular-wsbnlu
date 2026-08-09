@@ -2593,10 +2593,19 @@
 
   // "cookies.consent.content-notice.description": "We collect and process your personal information for the following purposes: {purposes}",
   // TODO Source message changed - Revise the translation
-  "cookies.consent.content-notice.description": "نقوم بجمع ومعالجة معلوماتك الشخصية للأغراض التالية: <strong>الاستيثاق، والتفضيلات، والإقرار، والإحصائيات</strong>. <br/> لمعرفة المزيد، يرجى قراءة {privacyPolicy}.",
+  "cookies.consent.content-notice.description": "نقوم بجمع ومعالجة معلوماتك الشخصية للأغراض التالية: {purposes}",
 
   // "cookies.consent.content-notice.learnMore": "Customize",
   "cookies.consent.content-notice.learnMore": "تخصيص",
+
+  // "cookies.consent.content-notice.privacy-policy.name": "privacy policy",
+  "cookies.consent.content-notice.privacy-policy.name": "سياسة الخصوصية",
+
+  // "cookies.consent.content-notice.privacy-policy.text": ". To learn more, please read our {privacyPolicy}.",
+  "cookies.consent.content-notice.privacy-policy.text": ". لمعرفة المزيد، يرجى قراءة {privacyPolicy}.",
+
+  // "cookies.consent.content-notice.no-privacy-policy.text": ".",
+  "cookies.consent.content-notice.no-privacy-policy.text": ".",
 
   // "cookies.consent.content-modal.description": "Here you can see and customize the information that we collect about you.",
   "cookies.consent.content-modal.description": "من هنا يمكنك رؤية وتخصيص المعلومات التي نقوم بجمعها عنك.",
