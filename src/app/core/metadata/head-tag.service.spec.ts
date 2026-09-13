@@ -327,6 +327,52 @@ describe('HeadTagService', () => {
       expect(meta.addTag).not.toHaveBeenCalledWith(jasmine.objectContaining({ name: 'citation_publisher' }));
     }));
 
+    it('should fall back to the Polish institution name for a Polish masterThesis without dc.publisher', fakeAsync(() => {
+      (headTagService as any).processRouteChange({
+        data: {
+          value: {
+            dso: createSuccessfulRemoteDataObject(mockUnpublishedTypeAndLanguage(ItemMock, 'masterThesis', 'pl')),
+          },
+        },
+      });
+      tick();
+      expect(meta.addTag).toHaveBeenCalledWith({
+        name: 'citation_dissertation_institution',
+        content: 'Wyższa Szkoła Biznesu – National-Louis University w Nowym Sączu',
+      });
+      expect(meta.addTag).not.toHaveBeenCalledWith(jasmine.objectContaining({ name: 'citation_publisher' }));
+    }));
+
+    it('should fall back to the English institution name for an English bachelorThesis without dc.publisher', fakeAsync(() => {
+      (headTagService as any).processRouteChange({
+        data: {
+          value: {
+            dso: createSuccessfulRemoteDataObject(mockUnpublishedTypeAndLanguage(ItemMock, 'bachelorThesis', 'en')),
+          },
+        },
+      });
+      tick();
+      expect(meta.addTag).toHaveBeenCalledWith({
+        name: 'citation_dissertation_institution',
+        content: 'Nowy Sacz School of Business – National-Louis University',
+      });
+    }));
+
+    it('should prefer dc.publisher over the fallback for a masterThesis', fakeAsync(() => {
+      (headTagService as any).processRouteChange({
+        data: {
+          value: {
+            dso: createSuccessfulRemoteDataObject(mockPublisher(mockType(ItemMock, 'masterThesis'))),
+          },
+        },
+      });
+      tick();
+      expect(meta.addTag).toHaveBeenCalledWith({
+        name: 'citation_dissertation_institution',
+        content: 'Mock Publisher',
+      });
+    }));
+
     it('should use citation_tech_report_institution tag for tech reports', fakeAsync(() => {
       (headTagService as any).processRouteChange({
         data: {
@@ -552,6 +598,19 @@ describe('HeadTagService', () => {
       },
     ] as MetadataValue[];
     return publishedMockItem;
+  };
+
+  /**
+   * Returns a copy of the item with the given dc.type and dc.language and without dc.publisher.
+   * Copies the metadata map, so the shared ItemMock is not modified.
+   */
+  const mockUnpublishedTypeAndLanguage = (mockItem: Item, type: string, language: string): Item => {
+    const metadata = Object.assign({}, mockItem.metadata, {
+      'dc.type': [{ value: type }],
+      'dc.language': [{ value: language }],
+    });
+    delete metadata['dc.publisher'];
+    return Object.assign(new Item(), mockItem, { metadata });
   };
 
   const mockUri = (mockItem: Item, uri?: string): Item => {

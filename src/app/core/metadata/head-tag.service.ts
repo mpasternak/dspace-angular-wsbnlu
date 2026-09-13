@@ -127,6 +127,22 @@ export class HeadTagService {
   private readonly CITATION_PDF_URL_SSR_TIMEOUT_MS = 5000;
 
   /**
+   * dc.type values (compared case-insensitively) treated as dissertations, including the
+   * COAR/DRIVER thesis types used by this repository.
+   * @private
+   */
+  private readonly DISSERTATION_TYPES = ['thesis', 'masterThesis', 'bachelorThesis', 'doctoralThesis'];
+
+  /**
+   * Institution names used for citation_dissertation_institution when dc.publisher is empty.
+   * @private
+   */
+  private readonly DEFAULT_INSTITUTION_NAME = {
+    pl: 'Wyższa Szkoła Biznesu – National-Louis University w Nowym Sączu',
+    en: 'Nowy Sacz School of Business – National-Louis University',
+  };
+
+  /**
    * Renderer2 instance for DOM manipulation
    */
   private renderer: Renderer2;
@@ -319,7 +335,7 @@ export class HeadTagService {
   protected setCitationPublisherTag(): void {
     const value = this.getMetaTagValue('dc.publisher');
     if (this.isDissertation()) {
-      this.addMetaTag('citation_dissertation_institution', value);
+      this.addMetaTag('citation_dissertation_institution', value || this.getDefaultInstitutionName());
     } else if (this.isTechReport()) {
       this.addMetaTag('citation_technical_report_institution', value);
     } else {
@@ -554,10 +570,18 @@ export class HeadTagService {
    * Returns true if this._item is a dissertation
    *
    * @returns {boolean}
-   *      true if this._item has a dc.type equal to 'Thesis'
+   *      true if this._item has a dc.type equal to one of {@linkcode DISSERTATION_TYPES}
    */
   protected isDissertation(): boolean {
-    return this.hasType('thesis');
+    return this.DISSERTATION_TYPES.some((type: string) => this.hasType(type));
+  }
+
+  /**
+   * Returns the institution name matching the item's language: English for 'en*', Polish otherwise.
+   */
+  protected getDefaultInstitutionName(): string {
+    const language = this.getFirstMetaTagValue(['dc.language', 'dc.language.iso']);
+    return language?.toLowerCase().startsWith('en') ? this.DEFAULT_INSTITUTION_NAME.en : this.DEFAULT_INSTITUTION_NAME.pl;
   }
 
   /**
