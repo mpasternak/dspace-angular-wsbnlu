@@ -37,6 +37,7 @@ import {
   mergeMap,
   switchMap,
   take,
+  timeout,
 } from 'rxjs/operators';
 
 import {
@@ -118,6 +119,12 @@ export class HeadTagService {
     'application/rtf',                                                          // .rtf
     'application/epub+zip',                                                     // .epub
   ];
+
+  /**
+   * Maximum time SSR waits for the citation_pdf_url lookup before serializing the page without it.
+   * @private
+   */
+  private readonly CITATION_PDF_URL_SSR_TIMEOUT_MS = 5000;
 
   /**
    * Renderer2 instance for DOM manipulation
@@ -418,7 +425,12 @@ export class HeadTagService {
           },
         }, followLink('format')),
       ).pipe(
-        getFirstSucceededRemoteDataPayload(),
+        getFirstCompletedRemoteData(),
+        // Object cache streams never complete, so a failed request (e.g. an ORIGINAL bundle that is
+        // restricted for anonymous users) must complete explicitly to release the pending task.
+        switchMap((bundleRd: RemoteData<Bundle>) =>
+          bundleRd.hasSucceeded && hasValue(bundleRd.payload) ? of(bundleRd.payload) : EMPTY,
+        ),
         switchMap((bundle: Bundle) =>
           // First try the primary bitstream
           bundle.primaryBitstream.pipe(
@@ -455,6 +467,8 @@ export class HeadTagService {
             );
           }
         }),
+        // Safety net: never let a lookup that doesn't emit block SSR serialization.
+        timeout({ first: this.CITATION_PDF_URL_SSR_TIMEOUT_MS, with: () => EMPTY }),
         take(1),
         finalize(() => taskCleanup()),
       ).subscribe((link: string) => {

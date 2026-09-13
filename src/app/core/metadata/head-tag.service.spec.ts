@@ -18,6 +18,8 @@ import {
 import { createMockStore } from '@ngrx/store/testing';
 import { TranslateService } from '@ngx-translate/core';
 import {
+  concat as observableConcat,
+  NEVER,
   Observable,
   of,
 } from 'rxjs';
@@ -33,6 +35,7 @@ import {
 } from '../../shared/mocks/item.mock';
 import { getMockTranslateService } from '../../shared/mocks/translate.service.mock';
 import {
+  createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject,
   createSuccessfulRemoteDataObject$,
 } from '../../shared/remote-data.utils';
@@ -438,6 +441,49 @@ describe('HeadTagService', () => {
 
       });
 
+    });
+
+    describe('SSR pending task', () => {
+      let taskCleanup: jasmine.Spy;
+
+      beforeEach(() => {
+        taskCleanup = jasmine.createSpy('taskCleanup');
+        (pendingTasks.add as jasmine.Spy).and.returnValue(taskCleanup);
+      });
+
+      it('should be released when the ORIGINAL bundle is not accessible', fakeAsync(() => {
+        // Object cache streams never complete; a 404 (e.g. restricted ORIGINAL bundle)
+        // must not keep SSR waiting forever.
+        (bundleDataService.findByItemAndName as jasmine.Spy).and.returnValue(
+          observableConcat(createFailedRemoteDataObject$('Not Found', 404), NEVER),
+        );
+
+        (headTagService as any).processRouteChange({
+          data: {
+            value: {
+              dso: createSuccessfulRemoteDataObject(ItemMock),
+            },
+          },
+        });
+        tick();
+        expect(taskCleanup).toHaveBeenCalled();
+        expect(meta.addTag).not.toHaveBeenCalledWith(jasmine.objectContaining({ name: 'citation_pdf_url' }));
+      }));
+
+      it('should be released after a timeout when the bitstream lookup never emits', fakeAsync(() => {
+        (bundleDataService.findByItemAndName as jasmine.Spy).and.returnValue(NEVER);
+
+        (headTagService as any).processRouteChange({
+          data: {
+            value: {
+              dso: createSuccessfulRemoteDataObject(ItemMock),
+            },
+          },
+        });
+        tick((headTagService as any).CITATION_PDF_URL_SSR_TIMEOUT_MS);
+        expect(taskCleanup).toHaveBeenCalled();
+        expect(meta.addTag).not.toHaveBeenCalledWith(jasmine.objectContaining({ name: 'citation_pdf_url' }));
+      }));
     });
   });
 
