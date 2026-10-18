@@ -1,14 +1,15 @@
 import { TestBed } from '@angular/core/testing';
-import { StructuredDataService } from './structured-data.service';
-import { Item } from '../shared/item.model';
+
 import { Collection } from '../shared/collection.model';
+import { Item } from '../shared/item.model';
+import { StructuredDataService } from './structured-data.service';
 
 describe('StructuredDataService', () => {
   let service: StructuredDataService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [StructuredDataService]
+      providers: [StructuredDataService],
     });
     service = TestBed.inject(StructuredDataService);
   });
@@ -27,7 +28,7 @@ describe('StructuredDataService', () => {
           'dc.date.issued': [{ value: '2024-01-15' }],
           'dc.description.abstract': [{ value: 'This is a test abstract' }],
           'dc.subject': [{ value: 'Testing' }, { value: 'Research' }],
-          'dc.type': [{ value: 'Article' }]
+          'dc.type': [{ value: 'Article' }],
         },
         firstMetadataValue: (key: string | string[]) => {
           const keys = Array.isArray(key) ? key : [key];
@@ -47,7 +48,7 @@ describe('StructuredDataService', () => {
           }
           return values;
         },
-        hasMetadata: () => false
+        hasMetadata: () => false,
       });
 
       const currentUrl = 'https://example.com/items/test-uuid-123';
@@ -67,7 +68,7 @@ describe('StructuredDataService', () => {
         metadata: {},
         firstMetadataValue: () => null,
         allMetadataValues: () => [],
-        hasMetadata: () => false
+        hasMetadata: () => false,
       });
 
       const currentUrl = 'https://example.com/items/test-uuid-456';
@@ -83,7 +84,7 @@ describe('StructuredDataService', () => {
         uuid: 'test-uuid-789',
         metadata: {
           'dc.title': [{ value: 'Test Thesis' }],
-          'dc.type': [{ value: 'Thesis' }]
+          'dc.type': [{ value: 'Thesis' }],
         },
         firstMetadataValue: (key: string | string[]) => {
           const keys = Array.isArray(key) ? key : [key];
@@ -95,7 +96,7 @@ describe('StructuredDataService', () => {
           return null;
         },
         allMetadataValues: () => [],
-        hasMetadata: () => false
+        hasMetadata: () => false,
       });
 
       const currentUrl = 'https://example.com/items/test-uuid-789';
@@ -110,10 +111,13 @@ describe('StructuredDataService', () => {
     it('should generate JSON-LD for a collection', () => {
       const mockCollection = Object.assign(new Collection(), {
         uuid: 'collection-uuid-123',
-        handle: 'hdl:123456/789',
-        name: 'Test Collection',
-        shortDescription: 'A test collection for unit tests',
-        archivedItemsCount: 42
+        // handle and shortDescription are read-only getters over metadata
+        metadata: {
+          'dc.title': [{ value: 'Test Collection' }],
+          'dc.identifier.uri': [{ value: 'hdl:123456/789' }],
+          'dc.description.abstract': [{ value: 'A test collection for unit tests' }],
+        },
+        archivedItemsCount: 42,
       });
 
       const currentUrl = 'https://example.com/collections/collection-uuid-123';
@@ -130,7 +134,7 @@ describe('StructuredDataService', () => {
     it('should handle collection with minimal metadata', () => {
       const mockCollection = Object.assign(new Collection(), {
         uuid: 'collection-uuid-456',
-        name: 'Minimal Collection'
+        name: 'Minimal Collection',
       });
 
       const currentUrl = 'https://example.com/collections/collection-uuid-456';
@@ -149,7 +153,7 @@ describe('StructuredDataService', () => {
         uuid: 'test-dataset',
         metadata: {
           'dc.title': [{ value: 'Test Dataset' }],
-          'dc.type': [{ value: 'Dataset' }]
+          'dc.type': [{ value: 'Dataset' }],
         },
         firstMetadataValue: (key: string | string[]) => {
           const keys = Array.isArray(key) ? key : [key];
@@ -161,7 +165,7 @@ describe('StructuredDataService', () => {
           return null;
         },
         allMetadataValues: () => [],
-        hasMetadata: () => false
+        hasMetadata: () => false,
       });
 
       const result = service.generateItemStructuredData(mockItem, 'https://example.com/items/test-dataset');
@@ -173,7 +177,7 @@ describe('StructuredDataService', () => {
         uuid: 'test-software',
         metadata: {
           'dc.title': [{ value: 'Test Software' }],
-          'dc.type': [{ value: 'Software' }]
+          'dc.type': [{ value: 'Software' }],
         },
         firstMetadataValue: (key: string | string[]) => {
           const keys = Array.isArray(key) ? key : [key];
@@ -185,7 +189,7 @@ describe('StructuredDataService', () => {
           return null;
         },
         allMetadataValues: () => [],
-        hasMetadata: () => false
+        hasMetadata: () => false,
       });
 
       const result = service.generateItemStructuredData(mockItem, 'https://example.com/items/test-software');
@@ -198,7 +202,7 @@ describe('StructuredDataService', () => {
         metadata: {
           'dc.title': [{ value: 'Test Video' }],
           'dc.type': [{ value: 'video' }],
-          'dc.date.issued': [{ value: '2014-03-01' }]
+          'dc.date.issued': [{ value: '2014-03-01' }],
         },
         firstMetadataValue: (key: string | string[]) => {
           const keys = Array.isArray(key) ? key : [key];
@@ -210,14 +214,14 @@ describe('StructuredDataService', () => {
           return null;
         },
         allMetadataValues: () => [],
-        hasMetadata: () => false
+        hasMetadata: () => false,
       });
 
       const result = JSON.parse(service.generateItemStructuredData(
         mockItem,
         'https://example.com/items/test-video',
         'https://example.com/thumbnail.jpg',
-        'https://example.com/bitstreams/test.pdf'
+        'https://example.com/bitstreams/test.pdf',
       ));
       expect(result['@type']).toBe('VideoObject');
       expect(result.uploadDate).toBe('2014-03-01');

@@ -3,7 +3,6 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
-import { ChartType } from 'chart.js';
 import {
   ActivatedRoute,
   Router,

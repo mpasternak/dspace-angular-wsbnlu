@@ -1,7 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  Input,
+} from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
+
 import { Item } from '../../../core/shared/item.model';
 import { CitationExportModalComponent } from '../citation-export-modal/citation-export-modal.component';
 
@@ -24,17 +28,17 @@ export class CitationExportButtonComponent {
   /**
    * Optional CSS classes for the button
    */
-  @Input() buttonClass: string = 'btn btn-outline-primary';
+  @Input() buttonClass = 'btn btn-outline-primary';
 
   /**
    * Whether to show icon with the button text
    */
-  @Input() showIcon: boolean = true;
+  @Input() showIcon = true;
 
   /**
    * Whether to show text with the button
    */
-  @Input() showText: boolean = true;
+  @Input() showText = true;
 
   constructor(
     private modalService: NgbModal,

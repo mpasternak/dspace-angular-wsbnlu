@@ -17,7 +17,7 @@ import {
 Chart.register(...registerables);
 
 @Component({
-  selector: 'ds-base-chart',
+  selector: 'ds-chart-canvas',
   template: `
     <div class="chart-container" [style.height]="height">
       <canvas [attr.data-test]="testId" [id]="chartId"></canvas>
@@ -57,7 +57,7 @@ export class BaseChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private createChart(): void {
-    if (!this.data) return;
+    if (!this.data) {return;}
 
     // Destroy existing chart if it exists
     if (this.chart) {
@@ -66,10 +66,10 @@ export class BaseChartComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     const canvas = document.getElementById(this.chartId) as HTMLCanvasElement;
-    if (!canvas) return;
+    if (!canvas) {return;}
 
     const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    if (!ctx) {return;}
 
     const config: ChartConfiguration = {
       type: this.type,

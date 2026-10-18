@@ -11,7 +11,9 @@ import { CookiesComponent } from './cookies.component';
   styleUrls: [],
   templateUrl: '../../shared/theme-support/themed.component.html',
   standalone: true,
-  imports: [CookiesComponent],
+  imports: [
+    CookiesComponent,
+  ],
 })
 export class ThemedCookiesComponent extends ThemedComponent<CookiesComponent> {
   protected getComponentName(): string {

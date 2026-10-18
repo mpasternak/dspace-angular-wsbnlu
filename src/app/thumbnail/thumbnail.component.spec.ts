@@ -131,13 +131,13 @@ describe('ThumbnailComponent', () => {
         it('should render but hide the image while loading and show it once done', () => {
           let img = fixture.debugElement.query(By.css('img.thumbnail-content'));
           expect(img).toBeTruthy();
-          expect(img.classes['d-none']).toBeTrue();
+          expect(img.styles.visibility).toBe('hidden');
 
           comp.isLoading.set(false);
           fixture.detectChanges();
           img = fixture.debugElement.query(By.css('img.thumbnail-content'));
           expect(img).toBeTruthy();
-          expect(img.classes['d-none']).toBeFalsy();
+          expect(img.styles.visibility).toBe('visible');
         });
 
       });

@@ -57,20 +57,16 @@ import 'core-js/es/object/assign';
 import 'core-js/es/object/values';
 import 'core-js/es/object/entries';
 import 'core-js/es/object/from-entries';
-
 // Array methods (used in 69+ files)
 import 'core-js/es/array/includes';
 import 'core-js/es/array/find';
 import 'core-js/es/array/find-index';
 import 'core-js/es/array/flat';
 import 'core-js/es/array/flat-map';
-
 // Reflect for decorators
 import 'core-js/es/reflect';
 import 'reflect-metadata';
-
 // Zone.js for Angular change detection (required)
 import 'zone.js';
-
 // Angular localize for date/number pipes (used in 6+ components)
 import '@angular/localize/init';

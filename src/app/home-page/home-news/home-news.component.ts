@@ -6,7 +6,9 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrls: ['./home-news.component.scss'],
   templateUrl: './home-news.component.html',
   standalone: true,
-  imports: [TranslateModule],
+  imports: [
+    TranslateModule,
+  ],
 })
 
 /**

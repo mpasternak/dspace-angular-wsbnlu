@@ -16,9 +16,11 @@
       [(ngModel)]="selectedFormat"
       (change)="onFormatChange()"
       [disabled]="isLoading">
-      <option *ngFor="let format of formats" [value]="format.key">
-        {{ format.label }}
-      </option>
+      @for (format of formats; track format.key) {
+        <option [value]="format.key">
+          {{ format.label }}
+        </option>
+      }
     </select>
   </div>
 
@@ -27,19 +29,25 @@
       {{ 'citation-export.modal.preview-label' | translate }}
     </label>
 
-    <div *ngIf="isLoading" class="text-center p-3">
-      <i class="fas fa-spinner fa-spin"></i>
-      {{ 'citation-export.modal.generating' | translate }}
-    </div>
+    @if (isLoading) {
+      <div class="text-center p-3">
+        <i class="fas fa-spinner fa-spin"></i>
+        {{ 'citation-export.modal.generating' | translate }}
+      </div>
+    }
 
-    <div *ngIf="errorMessage && !isLoading" class="alert alert-warning mb-3">
-      <i class="fas fa-exclamation-triangle"></i>
-      {{ errorMessage }}
-    </div>
+    @if (errorMessage && !isLoading) {
+      <div class="alert alert-warning mb-3">
+        <i class="fas fa-exclamation-triangle"></i>
+        {{ errorMessage }}
+      </div>
+    }
 
-    <div *ngIf="citationText && !isLoading" class="citation-preview">
-      <pre class="border rounded p-3 bg-light">{{ citationText }}</pre>
-    </div>
+    @if (citationText && !isLoading) {
+      <div class="citation-preview">
+        <pre class="border rounded p-3 bg-light">{{ citationText }}</pre>
+      </div>
+    }
   </div>
 </div>
 
@@ -48,7 +56,7 @@
     type="button"
     class="btn btn-secondary"
     (click)="copyCitation()"
-    [disabled]="!citationText || isLoading">
+    [dsBtnDisabled]="!citationText || isLoading">
     <i class="fas fa-copy"></i>
     {{ 'citation-export.modal.copy-button' | translate }}
   </button>
@@ -57,7 +65,7 @@
     type="button"
     class="btn btn-primary"
     (click)="downloadCitation()"
-    [disabled]="!citationText || isLoading">
+    [dsBtnDisabled]="!citationText || isLoading">
     <i class="fas fa-download"></i>
     {{ 'citation-export.modal.download-button' | translate }}
   </button>

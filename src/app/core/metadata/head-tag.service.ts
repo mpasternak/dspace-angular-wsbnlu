@@ -46,7 +46,6 @@ import {
 } from '../../../config/app-config.interface';
 import { getBitstreamDownloadRoute } from '../../app-routing-paths';
 import {
-  hasNoValue,
   hasValue,
   isNotEmpty,
 } from '../../shared/empty.util';

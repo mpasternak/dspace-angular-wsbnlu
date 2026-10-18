@@ -4,9 +4,10 @@ import {
   OnInit,
 } from '@angular/core';
 import {
-  ChartType,
-} from 'chart.js';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
+import { ChartType } from 'chart.js';
 
 import { UsageReport } from '../../core/statistics/models/usage-report.model';
 import { BaseChartComponent } from '../../shared/chart/base-chart.component';
@@ -58,7 +59,7 @@ export class StatisticsChartComponent implements OnInit {
 
     this.hasData = true;
     this.hasMultipleDataPoints = this.report.points.length > 1;
-    
+
     const labels = this.report.points.map(point => this.truncateText(point.label));
     const datasets = this.createDatasets();
 
@@ -72,7 +73,7 @@ export class StatisticsChartComponent implements OnInit {
 
   private createDatasets(): any[] {
     const headers = this.getHeaders();
-    
+
     return headers.map((header, index) => {
       const colors = this.getColors(index);
       return {
@@ -92,7 +93,7 @@ export class StatisticsChartComponent implements OnInit {
   }
 
   private getHeaders(): string[] {
-    if (this.report.points.length === 0) return [];
+    if (this.report.points.length === 0) {return [];}
     const firstPoint = this.report.points[0];
     if (firstPoint.values && typeof firstPoint.values === 'object') {
       return Object.keys(firstPoint.values);
@@ -112,7 +113,7 @@ export class StatisticsChartComponent implements OnInit {
       'rgba(153, 102, 255, 0.6)',
       'rgba(255, 159, 64, 0.6)',
     ];
-    
+
     const borderColors = [
       'rgba(54, 162, 235, 1)',
       'rgba(255, 99, 132, 1)',
@@ -120,7 +121,7 @@ export class StatisticsChartComponent implements OnInit {
       'rgba(153, 102, 255, 1)',
       'rgba(255, 159, 64, 1)',
     ];
-    
+
     return {
       background: backgroundColors[index % backgroundColors.length],
       border: borderColors[index % borderColors.length],
@@ -129,7 +130,7 @@ export class StatisticsChartComponent implements OnInit {
 
   private createChartOptions(): any {
     const translatedTitle = this.translateService.instant(`statistics.table.title.${this.report.reportType}`);
-    
+
     const baseOptions = {
       responsive: true,
       maintainAspectRatio: false,

@@ -1,15 +1,19 @@
 import { TestBed } from '@angular/core/testing';
+import { TranslateService } from '@ngx-translate/core';
 
 import { ShortNumberPipe } from './short-number.pipe';
 
 describe('ShortNumber Pipe', () => {
 
   let shortNumberPipe: ShortNumberPipe;
+  let translateService: { currentLang: string };
 
   beforeEach(() => {
+    translateService = { currentLang: 'en' };
     TestBed.configureTestingModule({
       providers: [
         ShortNumberPipe,
+        { provide: TranslateService, useValue: translateService },
       ],
     }).compileComponents();
 
@@ -83,6 +87,14 @@ describe('ShortNumber Pipe', () => {
     await testTransform(
       1000000000000000,
       '1Q',
+    );
+  });
+
+  it('should use Polish abbreviations for the Polish language', async () => {
+    translateService.currentLang = 'pl';
+    await testTransform(
+      1000000,
+      '1 mln',
     );
   });
 

@@ -1,4 +1,7 @@
-import { AsyncPipe, CommonModule } from '@angular/common';
+import {
+  AsyncPipe,
+  CommonModule,
+} from '@angular/common';
 import {
   Component,
   Input,
@@ -6,10 +9,18 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import {
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
+
 import { Item } from '../../../core/shared/item.model';
+import { BtnDisabledDirective } from '../../../shared/btn-disabled.directive';
 import { NotificationsService } from '../../../shared/notifications/notifications.service';
-import { CitationFormat, CitationService } from '../citation.service';
+import {
+  CitationFormat,
+  CitationService,
+} from '../citation.service';
 
 @Component({
   selector: 'ds-citation-export-modal',
@@ -17,10 +28,11 @@ import { CitationFormat, CitationService } from '../citation.service';
   styleUrls: ['./citation-export-modal.component.scss'],
   standalone: true,
   imports: [
+    AsyncPipe,
+    BtnDisabledDirective,
     CommonModule,
     FormsModule,
     TranslateModule,
-    AsyncPipe,
   ],
 })
 export class CitationExportModalComponent implements OnInit {
@@ -42,17 +54,17 @@ export class CitationExportModalComponent implements OnInit {
   /**
    * The generated citation text
    */
-  citationText: string = '';
+  citationText = '';
 
   /**
    * Loading state
    */
-  isLoading: boolean = false;
+  isLoading = false;
 
   /**
    * Error message if citation generation fails
    */
-  errorMessage: string = '';
+  errorMessage = '';
 
   constructor(
     protected activeModal: NgbActiveModal,
@@ -95,7 +107,7 @@ export class CitationExportModalComponent implements OnInit {
 
       if (!validationResult.isValid) {
         this.errorMessage = this.translateService.instant('citation-export.error.missing-metadata', {
-          fields: validationResult.missingFields.join(', ')
+          fields: validationResult.missingFields.join(', '),
         });
         this.citationText = this.translateService.instant('citation-export.error.incomplete-citation');
         this.isLoading = false;
@@ -129,12 +141,12 @@ export class CitationExportModalComponent implements OnInit {
     try {
       await this.citationService.copyCitation(this.item, this.selectedFormat);
       this.notificationsService.success(
-        this.translateService.get('citation-export.success.copied')
+        this.translateService.get('citation-export.success.copied'),
       );
     } catch (error) {
       console.error('Error copying citation:', error);
       this.notificationsService.error(
-        this.translateService.get('citation-export.error.copy-failed')
+        this.translateService.get('citation-export.error.copy-failed'),
       );
     }
   }
@@ -146,12 +158,12 @@ export class CitationExportModalComponent implements OnInit {
     try {
       this.citationService.downloadCitation(this.item, this.selectedFormat);
       this.notificationsService.success(
-        this.translateService.get('citation-export.success.downloaded')
+        this.translateService.get('citation-export.success.downloaded'),
       );
     } catch (error) {
       console.error('Error downloading citation:', error);
       this.notificationsService.error(
-        this.translateService.get('citation-export.error.download-failed')
+        this.translateService.get('citation-export.error.download-failed'),
       );
     }
   }

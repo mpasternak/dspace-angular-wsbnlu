@@ -56,7 +56,7 @@ export interface SchemaOrgOrganization {
  * CreativeWork - base type for most content
  */
 export interface SchemaOrgCreativeWork extends SchemaOrgThing {
-  '@type': 'CreativeWork' | string;
+  '@type': string;
   author?: SchemaOrgPerson | SchemaOrgPerson[] | SchemaOrgOrganization | SchemaOrgOrganization[];
   creator?: SchemaOrgPerson | SchemaOrgPerson[] | SchemaOrgOrganization | SchemaOrgOrganization[];
   datePublished?: string;
@@ -349,7 +349,7 @@ export const SCHEMA_ORG_TYPE_MAP: { [dcType: string]: string } = {
   'map': 'Map',
   'learning object': 'Course',
   'lecture': 'CreativeWork',
-  'musical composition': 'MusicComposition'
+  'musical composition': 'MusicComposition',
 };
 
 /**

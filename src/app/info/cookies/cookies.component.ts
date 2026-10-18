@@ -3,11 +3,13 @@ import { Component } from '@angular/core';
 import { CookiesContentComponent } from './cookies-content/cookies-content.component';
 
 @Component({
-  selector: 'ds-cookies',
+  selector: 'ds-base-cookies',
   templateUrl: './cookies.component.html',
   styleUrls: ['./cookies.component.scss'],
   standalone: true,
-  imports: [CookiesContentComponent],
+  imports: [
+    CookiesContentComponent,
+  ],
 })
 /**
  * Component displaying the Cookies Policy page

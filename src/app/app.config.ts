@@ -15,8 +15,6 @@ import {
   withPreloading,
   withRouterConfig,
 } from '@angular/router';
-
-import { SelectivePreloadingStrategy } from './core/preloading/selective-preloading.strategy';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DYNAMIC_MATCHER_PROVIDERS } from '@ng-dynamic-forms/core';
 import { EffectsModule } from '@ngrx/effects';
@@ -60,6 +58,7 @@ import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { DspaceRestInterceptor } from './core/dspace-rest/dspace-rest.interceptor';
 import { LocaleInterceptor } from './core/locale/locale.interceptor';
 import { LogInterceptor } from './core/log/log.interceptor';
+import { SelectivePreloadingStrategy } from './core/preloading/selective-preloading.strategy';
 import {
   models,
   provideCore,

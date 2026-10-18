@@ -105,7 +105,7 @@ describe('SiteStatisticsPageComponent', () => {
   });
 
   it('should show a statistics table for each usage report', () => {
-    expect(de.query(By.css('ds-statistics-table.site_id-TotalVisits-report')).nativeElement)
+    expect(de.query(By.css('.site_id-TotalVisits-report ds-statistics-table')).nativeElement)
       .toBeTruthy();
   });
 });

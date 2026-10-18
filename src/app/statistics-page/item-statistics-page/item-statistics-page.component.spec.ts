@@ -104,15 +104,15 @@ describe('ItemStatisticsPageComponent', () => {
   });
 
   it('should show a statistics table for each usage report', () => {
-    expect(de.query(By.css('ds-statistics-table.item_id-TotalVisits-report')).nativeElement)
+    expect(de.query(By.css('.item_id-TotalVisits-report ds-statistics-table')).nativeElement)
       .toBeTruthy();
-    expect(de.query(By.css('ds-statistics-table.item_id-TotalVisitsPerMonth-report')).nativeElement)
+    expect(de.query(By.css('.item_id-TotalVisitsPerMonth-report ds-statistics-table')).nativeElement)
       .toBeTruthy();
-    expect(de.query(By.css('ds-statistics-table.item_id-TotalDownloads-report')).nativeElement)
+    expect(de.query(By.css('.item_id-TotalDownloads-report ds-statistics-table')).nativeElement)
       .toBeTruthy();
-    expect(de.query(By.css('ds-statistics-table.item_id-TopCountries-report')).nativeElement)
+    expect(de.query(By.css('.item_id-TopCountries-report ds-statistics-table')).nativeElement)
       .toBeTruthy();
-    expect(de.query(By.css('ds-statistics-table.item_id-TopCities-report')).nativeElement)
+    expect(de.query(By.css('.item_id-TopCities-report ds-statistics-table')).nativeElement)
       .toBeTruthy();
   });
 });

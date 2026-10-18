@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Item } from '../shared/item.model';
-import { Collection } from '../shared/collection.model';
-import { DSpaceObject } from '../shared/dspace-object.model';
+
 import { hasValue } from '../../shared/empty.util';
-import { Bitstream } from '../shared/bitstream.model';
+import { Collection } from '../shared/collection.model';
+import { Item } from '../shared/item.model';
 
 /**
  * Service for generating schema.org structured data in JSON-LD format
  * for DSpace objects (Items and Collections) to improve SEO
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StructuredDataService {
 
@@ -45,7 +44,7 @@ export class StructuredDataService {
     'map': 'Map',
     'learning object': 'Course',
     'lecture': 'CreativeWork',
-    'musical composition': 'MusicComposition'
+    'musical composition': 'MusicComposition',
   };
 
   constructor() { }
@@ -62,7 +61,7 @@ export class StructuredDataService {
     item: Item,
     currentUrl: string,
     thumbnailUrl?: string,
-    pdfUrl?: string
+    pdfUrl?: string,
   ): string {
     if (!item) {
       return '';
@@ -86,7 +85,7 @@ export class StructuredDataService {
   public generateCollectionStructuredData(
     collection: Collection,
     currentUrl: string,
-    itemCount?: number
+    itemCount?: number,
   ): string {
     if (!collection) {
       return '';
@@ -137,11 +136,11 @@ export class StructuredDataService {
     schemaType: string,
     currentUrl: string,
     thumbnailUrl?: string,
-    pdfUrl?: string
+    pdfUrl?: string,
   ): any {
     const structuredData: any = {
       '@context': 'https://schema.org',
-      '@type': schemaType
+      '@type': schemaType,
     };
 
     // Title/Name
@@ -179,7 +178,7 @@ export class StructuredDataService {
     if (hasValue(publisher)) {
       structuredData.publisher = {
         '@type': 'Organization',
-        name: publisher
+        name: publisher,
       };
     }
 
@@ -241,11 +240,11 @@ export class StructuredDataService {
   private buildCollectionStructuredData(
     collection: Collection,
     currentUrl: string,
-    itemCount?: number
+    itemCount?: number,
   ): any {
     const structuredData: any = {
       '@context': 'https://schema.org',
-      '@type': 'Collection'  // Can be changed to DataCatalog if needed
+      '@type': 'Collection',  // Can be changed to DataCatalog if needed
     };
 
     // Name
@@ -300,7 +299,7 @@ export class StructuredDataService {
 
     return authors.map(author => ({
       '@type': 'Person',
-      name: author
+      name: author,
     }));
   }
 
@@ -324,7 +323,7 @@ export class StructuredDataService {
         '@type': 'PropertyValue',
         '@id': doiUrl,
         propertyID: 'DOI',
-        value: doi.replace(/^https?:\/\/doi\.org\//, '')
+        value: doi.replace(/^https?:\/\/doi\.org\//, ''),
       });
     }
 
@@ -334,7 +333,7 @@ export class StructuredDataService {
       identifiers.push({
         '@type': 'PropertyValue',
         propertyID: 'ISBN',
-        value: isbn
+        value: isbn,
       });
     }
 
@@ -344,7 +343,7 @@ export class StructuredDataService {
       identifiers.push({
         '@type': 'PropertyValue',
         propertyID: 'ISSN',
-        value: issn
+        value: issn,
       });
     }
 
@@ -353,7 +352,7 @@ export class StructuredDataService {
       identifiers.push({
         '@type': 'PropertyValue',
         propertyID: 'UUID',
-        value: item.uuid
+        value: item.uuid,
       });
     }
 
@@ -367,16 +366,16 @@ export class StructuredDataService {
     structuredData: any,
     item: Item,
     schemaType: string,
-    pdfUrl?: string
+    pdfUrl?: string,
   ): void {
     switch (schemaType) {
-      case 'ScholarlyArticle':
+      case 'ScholarlyArticle': {
         // Add journal information
         const journal = item.firstMetadataValue('dc.source');
         if (hasValue(journal)) {
           structuredData.isPartOf = {
             '@type': 'PublicationIssue',
-            name: journal
+            name: journal,
           };
         }
         // Add PDF as encoding
@@ -384,12 +383,13 @@ export class StructuredDataService {
           structuredData.encoding = {
             '@type': 'MediaObject',
             contentUrl: pdfUrl,
-            encodingFormat: 'application/pdf'
+            encodingFormat: 'application/pdf',
           };
         }
         break;
+      }
 
-      case 'Thesis':
+      case 'Thesis': {
         // Add degree information
         const degree = item.firstMetadataValue('thesis.degree.name');
         if (hasValue(degree)) {
@@ -400,12 +400,13 @@ export class StructuredDataService {
         if (hasValue(institution)) {
           structuredData.publisher = {
             '@type': 'EducationalOrganization',
-            name: institution
+            name: institution,
           };
         }
         break;
+      }
 
-      case 'Book':
+      case 'Book': {
         // Add ISBN if not already in identifiers
         const bookIsbn = item.firstMetadataValue('dc.identifier.isbn');
         if (hasValue(bookIsbn) && !structuredData.isbn) {
@@ -417,8 +418,9 @@ export class StructuredDataService {
           structuredData.numberOfPages = pages;
         }
         break;
+      }
 
-      case 'Dataset':
+      case 'Dataset': {
         // Add distribution/download information
         if (hasValue(pdfUrl) || item.bundles) {
           const distributions: any[] = [];
@@ -426,7 +428,7 @@ export class StructuredDataService {
             distributions.push({
               '@type': 'DataDownload',
               encodingFormat: 'application/pdf',
-              contentUrl: pdfUrl
+              contentUrl: pdfUrl,
             });
           }
           if (distributions.length > 0) {
@@ -444,8 +446,9 @@ export class StructuredDataService {
           structuredData.temporalCoverage = temporal;
         }
         break;
+      }
 
-      case 'SoftwareSourceCode':
+      case 'SoftwareSourceCode': {
         // Add programming language
         const progLang = item.firstMetadataValue(['dc.format', 'dc.type']);
         if (hasValue(progLang) && progLang.toLowerCase().includes('python')) {
@@ -457,10 +460,11 @@ export class StructuredDataService {
           structuredData.codeRepository = repo;
         }
         break;
+      }
 
       case 'ImageObject':
       case 'VideoObject':
-      case 'AudioObject':
+      case 'AudioObject': {
         // Add media-specific properties
         if (schemaType === 'VideoObject') {
           // Google requires uploadDate for VideoObject; the PDF is never the video itself, so no contentUrl
@@ -473,6 +477,7 @@ export class StructuredDataService {
           structuredData.encodingFormat = format;
         }
         break;
+      }
     }
   }
 
@@ -506,7 +511,7 @@ export class StructuredDataService {
       'russian': 'ru',
       'chinese': 'zh',
       'japanese': 'ja',
-      'korean': 'ko'
+      'korean': 'ko',
     };
 
     const normalized = language.toLowerCase();

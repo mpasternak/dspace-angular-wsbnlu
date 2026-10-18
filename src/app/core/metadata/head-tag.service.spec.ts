@@ -25,8 +25,6 @@ import {
 } from 'rxjs';
 
 import { AppConfig } from '../../../config/app-config.interface';
-import { LinkHeadService } from '../services/link-head.service';
-import { StructuredDataService } from './structured-data.service';
 import {
   ItemMock,
   MockBitstream1,
@@ -46,6 +44,7 @@ import { PaginatedList } from '../data/paginated-list.model';
 import { RemoteData } from '../data/remote-data';
 import { RootDataService } from '../data/root-data.service';
 import { HardRedirectService } from '../services/hard-redirect.service';
+import { LinkHeadService } from '../services/link-head.service';
 import { Bitstream } from '../shared/bitstream.model';
 import { Bundle } from '../shared/bundle.model';
 import { Item } from '../shared/item.model';
@@ -55,6 +54,7 @@ import {
   AddMetaTagAction,
   ClearMetaTagAction,
 } from './meta-tag.actions';
+import { StructuredDataService } from './structured-data.service';
 
 describe('HeadTagService', () => {
   let headTagService: HeadTagService;
@@ -278,7 +278,8 @@ describe('HeadTagService', () => {
   });
 
   describe('citation_abstract_html_url', () => {
-    it('should use dc.identifier.uri if available', fakeAsync(() => {
+    it('should use the current route even if dc.identifier.uri is available', fakeAsync(() => {
+      // Google Scholar requires the abstract URL on the repository's own domain, not the handle resolver
       (headTagService as any).processRouteChange({
         data: {
           value: {
@@ -289,11 +290,11 @@ describe('HeadTagService', () => {
       tick();
       expect(meta.addTag).toHaveBeenCalledWith({
         name: 'citation_abstract_html_url',
-        content: 'https://ddg.gg',
+        content: 'https://request.org/items/0ec7ff22-f211-40ab-a69e-c819b0b1f357',
       });
     }));
 
-    it('should use current route as fallback', fakeAsync(() => {
+    it('should use current route if dc.identifier.uri is missing', fakeAsync(() => {
       (headTagService as any).processRouteChange({
         data: {
           value: {

@@ -210,13 +210,41 @@ export const environment: BuildConfig = {
     label: 'English',
     active: true,
   }, {
-    code: 'pl',
-    label: 'Polski',
+    code: 'de',
+    label: 'Deutsch',
     active: true,
   }, {
-    code: 'ru',
-    label: 'Русский',
+    code: 'cs',
+    label: 'Čeština',
     active: true,
+  }, {
+    code: 'nl',
+    label: 'Nederlands',
+    active: true,
+  }, {
+    code: 'pt',
+    label: 'Português',
+    active: true,
+  }, {
+    code: 'fr',
+    label: 'Français',
+    active: true,
+  }, {
+    code: 'lv',
+    label: 'Latviešu',
+    active: true,
+  }, {
+    code: 'bn',
+    label: 'বাংলা',
+    active: true,
+  }, {
+    code: 'el',
+    label: 'Ελληνικά',
+    active: true,
+  }, {
+    code: 'disabled',
+    label: 'Disabled',
+    active: false,
   }],
 
   // Browse-By Pages

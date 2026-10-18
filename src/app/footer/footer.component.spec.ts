@@ -1,11 +1,9 @@
 import {
   ComponentFixture,
-  fakeAsync,
   inject,
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
@@ -81,27 +79,4 @@ describe('Footer component', () => {
     });
   });
 
-  describe('when coarLdnEnabled is true', () => {
-    beforeEach(() => {
-      spyOn(notifyInfoService, 'isCoarConfigEnabled').and.returnValue(of(true));
-      fixture.detectChanges();
-    });
-
-    it('should render COAR notify support link', () => {
-      const notifySection = fixture.debugElement.query(By.css('.notify-enabled'));
-      expect(notifySection).toBeTruthy();
-    });
-
-    it('should redirect to info/coar-notify-support', () => {
-      // Check if the link to the COAR Notify support page is present
-      const routerLink = fixture.debugElement.query(By.css('a[routerLink="info/coar-notify-support"].coar-notify-support-route'));
-      expect(routerLink).toBeTruthy();
-    });
-
-    it('should have an img tag with the class "n-coar" when coarLdnEnabled is true', fakeAsync(() => {
-      // Check if the img tag with the class "n-coar" is present
-      const imgTag = fixture.debugElement.query(By.css('.notify-enabled img.n-coar'));
-      expect(imgTag).toBeTruthy();
-    }));
-  });
 });

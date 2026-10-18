@@ -1645,7 +1645,7 @@
 
   // NOTE: the leading ". " is intentional. Orejime's consent notice renders `description` and
   // `privacyPolicy.text` back-to-back inside one <p> with no separator (unlike the modal, which
-  // injects a  ). Keeping the sentence break here means `description` stays unchanged in every
+  // injects a non-breaking space). Keeping the sentence break here means `description` stays unchanged in every
   // language pack. See consent-notice.js in the orejime package.
   "cookies.consent.content-notice.privacy-policy.text": ". To learn more, please read our {privacyPolicy}.",
 

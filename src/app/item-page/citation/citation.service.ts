@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+
 import { Item } from '../../core/shared/item.model';
 import { MetadataValue } from '../../core/shared/metadata.models';
 
@@ -15,7 +16,7 @@ export interface CitationFormat {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CitationService {
 
@@ -178,7 +179,7 @@ export class CitationService {
       const parts = authorString.split(',').map(p => p.trim());
       return {
         family: parts[0],
-        given: parts[1] || ''
+        given: parts[1] || '',
       };
     }
 
@@ -189,13 +190,13 @@ export class CitationService {
       const firstName = parts.slice(0, -1).join(' ');
       return {
         family: lastName,
-        given: firstName
+        given: firstName,
       };
     }
 
     // Single name
     return {
-      literal: authorString
+      literal: authorString,
     };
   }
 
@@ -209,8 +210,8 @@ export class CitationService {
         'date-parts': [[
           date.getFullYear(),
           date.getMonth() + 1,
-          date.getDate()
-        ]]
+          date.getDate(),
+        ]],
       };
     }
 
@@ -218,7 +219,7 @@ export class CitationService {
     const yearMatch = dateString.match(/\d{4}/);
     if (yearMatch) {
       return {
-        'date-parts': [[parseInt(yearMatch[0], 10)]]
+        'date-parts': [[parseInt(yearMatch[0], 10)]],
       };
     }
 
@@ -286,7 +287,7 @@ export class CitationService {
 
     return {
       isValid: missingFields.length === 0,
-      missingFields: missingFields
+      missingFields: missingFields,
     };
   }
 
@@ -306,7 +307,7 @@ export class CitationService {
       return cite.format('bibliography', {
         format: 'text',
         template: format.type,
-        lang: 'en-US'
+        lang: 'en-US',
       });
     } else if (format.format === 'bibtex') {
       return cite.format('bibtex');

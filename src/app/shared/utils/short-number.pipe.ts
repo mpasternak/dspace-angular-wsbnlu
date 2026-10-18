@@ -71,7 +71,7 @@ export class ShortNumberPipe implements PipeTransform {
         million: ' mln',
         billion: ' mld',
         trillion: ' bln',
-        quadrillion: ' bld'
+        quadrillion: ' bld',
       };
     }
     // Default to English abbreviations
@@ -80,7 +80,7 @@ export class ShortNumberPipe implements PipeTransform {
       million: 'M',
       billion: 'B',
       trillion: 'T',
-      quadrillion: 'Q'
+      quadrillion: 'Q',
     };
   }
 }
