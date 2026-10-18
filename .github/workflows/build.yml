@@ -338,6 +338,8 @@ jobs:
   codecov:
     # Must run after 'tests' job above
     needs: tests
+    # This fork has no Codecov project/token, so the upload can only work upstream
+    if: github.repository == 'dspace/dspace-angular'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
