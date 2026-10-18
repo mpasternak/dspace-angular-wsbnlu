@@ -462,7 +462,10 @@ export class StructuredDataService {
       case 'VideoObject':
       case 'AudioObject':
         // Add media-specific properties
-        if (hasValue(pdfUrl)) {
+        if (schemaType === 'VideoObject') {
+          // Google requires uploadDate for VideoObject; the PDF is never the video itself, so no contentUrl
+          structuredData.uploadDate = structuredData.datePublished;
+        } else if (hasValue(pdfUrl)) {
           structuredData.contentUrl = pdfUrl;
         }
         const format = item.firstMetadataValue('dc.format.mimetype');

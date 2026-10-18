@@ -191,5 +191,38 @@ describe('StructuredDataService', () => {
       const result = service.generateItemStructuredData(mockItem, 'https://example.com/items/test-software');
       expect(result).toContain('"@type": "SoftwareSourceCode"');
     });
+
+    it('should map video type with uploadDate required by Google', () => {
+      const mockItem = Object.assign(new Item(), {
+        uuid: 'test-video',
+        metadata: {
+          'dc.title': [{ value: 'Test Video' }],
+          'dc.type': [{ value: 'video' }],
+          'dc.date.issued': [{ value: '2014-03-01' }]
+        },
+        firstMetadataValue: (key: string | string[]) => {
+          const keys = Array.isArray(key) ? key : [key];
+          for (const k of keys) {
+            if (mockItem.metadata[k] && mockItem.metadata[k].length > 0) {
+              return mockItem.metadata[k][0].value;
+            }
+          }
+          return null;
+        },
+        allMetadataValues: () => [],
+        hasMetadata: () => false
+      });
+
+      const result = JSON.parse(service.generateItemStructuredData(
+        mockItem,
+        'https://example.com/items/test-video',
+        'https://example.com/thumbnail.jpg',
+        'https://example.com/bitstreams/test.pdf'
+      ));
+      expect(result['@type']).toBe('VideoObject');
+      expect(result.uploadDate).toBe('2014-03-01');
+      // The PDF is not the video file, so it must not be advertised as its content
+      expect(result.contentUrl).toBeUndefined();
+    });
   });
 });
