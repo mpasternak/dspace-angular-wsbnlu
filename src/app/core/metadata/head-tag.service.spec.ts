@@ -409,6 +409,64 @@ describe('HeadTagService', () => {
     }));
   });
 
+  describe('book chapters', () => {
+    const mockChapter = (type: string, extra: { [key: string]: string }): Item => {
+      const metadata = Object.assign({}, ItemMock.metadata, { 'dc.type': [{ value: type }] });
+      Object.keys(extra).forEach((key) => metadata[key] = [{ value: extra[key] }] as MetadataValue[]);
+      return Object.assign(new Item(), ItemMock, { metadata });
+    };
+    const route = (item: Item) => ({ data: { value: { dso: createSuccessfulRemoteDataObject(item) } } });
+
+    it('should emit the book title as citation_inbook_title, not citation_journal_title', fakeAsync(() => {
+      (headTagService as any).processRouteChange(route(mockChapter('Book chapter', {
+        'dc.relation.ispartof': 'Przekraczanie granic między sferami egzystencji',
+      })));
+      tick();
+      expect(meta.addTag).toHaveBeenCalledWith({
+        name: 'citation_inbook_title',
+        content: 'Przekraczanie granic między sferami egzystencji',
+      });
+      expect(meta.addTag).not.toHaveBeenCalledWith(jasmine.objectContaining({ name: 'citation_journal_title' }));
+    }));
+
+    it('should keep citation_journal_title for articles', fakeAsync(() => {
+      (headTagService as any).processRouteChange(route(mockChapter('Article', {
+        'dc.relation.ispartof': 'Mock Journal',
+      })));
+      tick();
+      expect(meta.addTag).toHaveBeenCalledWith({ name: 'citation_journal_title', content: 'Mock Journal' });
+      expect(meta.addTag).not.toHaveBeenCalledWith(jasmine.objectContaining({ name: 'citation_inbook_title' }));
+    }));
+
+    it('should take chapter pages from dc.identifier.citation when page fields are missing', fakeAsync(() => {
+      (headTagService as any).processRouteChange(route(mockChapter('Book chapter', {
+        'dc.identifier.citation': 'Sulimski, A. (2025). Od coachingu... W: J. Felczak (red.), Tytuł (T. 1). (s. 129-137). Wydawnictwo.',
+      })));
+      tick();
+      expect(meta.addTag).toHaveBeenCalledWith({ name: 'citation_firstpage', content: '129' });
+      expect(meta.addTag).toHaveBeenCalledWith({ name: 'citation_lastpage', content: '137' });
+    }));
+
+    it('should prefer dc.citation.spage/epage over the citation text', fakeAsync(() => {
+      (headTagService as any).processRouteChange(route(mockChapter('Book chapter', {
+        'dc.citation.spage': '5',
+        'dc.citation.epage': '9',
+        'dc.identifier.citation': 'Autor (2025). Tytuł. (s. 129-137).',
+      })));
+      tick();
+      expect(meta.addTag).toHaveBeenCalledWith({ name: 'citation_firstpage', content: '5' });
+      expect(meta.addTag).toHaveBeenCalledWith({ name: 'citation_lastpage', content: '9' });
+    }));
+
+    it('should not parse pages from the citation text for non-chapters', fakeAsync(() => {
+      (headTagService as any).processRouteChange(route(mockChapter('Article', {
+        'dc.identifier.citation': 'Autor (2025). Tytuł. Czasopismo, 3, s. 129-137.',
+      })));
+      tick();
+      expect(meta.addTag).not.toHaveBeenCalledWith(jasmine.objectContaining({ name: 'citation_firstpage' }));
+    }));
+  });
+
   describe('citation_pdf_url', () => {
     it('should link to primary Bitstream URL regardless of format', fakeAsync(() => {
       (bundleDataService.findByItemAndName as jasmine.Spy).and.returnValue(mockBundleRD$([], MockBitstream3));

@@ -133,6 +133,21 @@ export class HeadTagService {
   private readonly DISSERTATION_TYPES = ['thesis', 'masterThesis', 'bachelorThesis', 'doctoralThesis'];
 
   /**
+   * dc.type values (compared case-insensitively) treated as chapters of a book. For these,
+   * dc.relation.ispartof is the title of the book, not of a journal, so it is emitted as
+   * citation_inbook_title instead of citation_journal_title.
+   * @private
+   */
+  private readonly BOOK_PART_TYPES = ['Book chapter', 'book part', 'bookPart', 'chapter'];
+
+  /**
+   * Page range inside a bibliographic citation, e.g. "(s. 129-137)" or "pp. 12–20".
+   * Used for book chapters whose page numbers exist only in dc.identifier.citation.
+   * @private
+   */
+  private readonly CITATION_PAGE_RANGE = /\b(?:s|ss|pp?)\.\s*(\d+)\s*[-–—]\s*(\d+)/i;
+
+  /**
    * Institution names used for citation_dissertation_institution when dc.publisher is empty.
    * @private
    */
@@ -377,7 +392,7 @@ export class HeadTagService {
    */
   protected setCitationJournalTitleTag(): void {
     const value = this.getFirstMetaTagValue(['dc.relation.ispartof', 'dc.source']);
-    this.addMetaTag('citation_journal_title', value);
+    this.addMetaTag(this.isBookPart() ? 'citation_inbook_title' : 'citation_journal_title', value);
   }
 
   /**
@@ -400,7 +415,8 @@ export class HeadTagService {
    * Add <meta name="citation_firstpage" ... >  to the <head>
    */
   protected setCitationFirstPageTag(): void {
-    const value = this.getFirstMetaTagValue(['dc.bibliographicCitation.firstPage', 'dc.citation.spage']);
+    const value = this.getFirstMetaTagValue(['dc.bibliographicCitation.firstPage', 'dc.citation.spage'])
+      ?? this.getBookPartPageFromCitation(1);
     this.addMetaTag('citation_firstpage', value);
   }
 
@@ -408,7 +424,8 @@ export class HeadTagService {
    * Add <meta name="citation_lastpage" ... >  to the <head>
    */
   protected setCitationLastPageTag(): void {
-    const value = this.getFirstMetaTagValue(['dc.bibliographicCitation.lastPage', 'dc.citation.epage']);
+    const value = this.getFirstMetaTagValue(['dc.bibliographicCitation.lastPage', 'dc.citation.epage'])
+      ?? this.getBookPartPageFromCitation(2);
     this.addMetaTag('citation_lastpage', value);
   }
 
@@ -573,6 +590,27 @@ export class HeadTagService {
    */
   protected isDissertation(): boolean {
     return this.DISSERTATION_TYPES.some((type: string) => this.hasType(type));
+  }
+
+  /**
+   * Returns true if the current item is a chapter of a book ({@linkcode BOOK_PART_TYPES}).
+   */
+  protected isBookPart(): boolean {
+    return this.BOOK_PART_TYPES.some((type: string) => this.hasType(type));
+  }
+
+  /**
+   * For book chapters only: page number taken from the page range in dc.identifier.citation.
+   *
+   * @param group 1 for the first page, 2 for the last page
+   * @returns the page number, or undefined when the item is not a chapter or no range was found
+   */
+  protected getBookPartPageFromCitation(group: 1 | 2): string | undefined {
+    if (!this.isBookPart()) {
+      return undefined;
+    }
+    const citation = this.getMetaTagValue('dc.identifier.citation');
+    return citation?.match(this.CITATION_PAGE_RANGE)?.[group];
   }
 
   /**
