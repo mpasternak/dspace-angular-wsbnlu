@@ -114,6 +114,16 @@ if [ "$BUILD" = 1 ]; then
   [ "$NPM_CI" = 1 ] && run npm ci
   run npm run build:prod
 fi
+# The server bundle is emitted with a content hash (main.<hash>.js) while pm2 starts
+# dist/server/main.js, so point a relative symlink at the freshly built bundle.
+if [ "$DRY_RUN" = 0 ] && [ -d dist/server ]; then
+  mapfile -t BUNDLES < <(find dist/server -maxdepth 1 -type f -name 'main.*.js')
+  if [ "${#BUNDLES[@]}" = 1 ]; then
+    ln -sfn "$(basename "${BUNDLES[0]}")" dist/server/main.js
+  elif [ "${#BUNDLES[@]}" -gt 1 ]; then
+    die "several dist/server/main.*.js bundles found — clean dist/ and rebuild"
+  fi
+fi
 [ "$DRY_RUN" = 1 ] || [ -f dist/server/main.js ] || die "dist/server/main.js missing — build first"
 if [ "$DRY_RUN" = 0 ]; then
   printf 'commit=%s\nbuilt=%s\nnode=%s\n' "$COMMIT" "$(date -Iseconds)" "$LOCAL_NODE" > dist/DEPLOYED_FROM
