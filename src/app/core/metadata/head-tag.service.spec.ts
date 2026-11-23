@@ -409,6 +409,33 @@ describe('HeadTagService', () => {
     }));
   });
 
+  describe('edited volumes', () => {
+    const mockItem = (authors: string[], editors: string[]): Item => {
+      const metadata = Object.assign({}, ItemMock.metadata);
+      ['dc.author', 'dc.contributor.author', 'dc.creator', 'dc.contributor.editor'].forEach((key) => delete metadata[key]);
+      if (authors.length > 0) {
+        metadata['dc.contributor.author'] = authors.map((value) => ({ value })) as MetadataValue[];
+      }
+      metadata['dc.contributor.editor'] = editors.map((value) => ({ value })) as MetadataValue[];
+      return Object.assign(new Item(), ItemMock, { metadata });
+    };
+    const route = (item: Item) => ({ data: { value: { dso: createSuccessfulRemoteDataObject(item) } } });
+
+    it('should emit editors as citation_author when the item has no authors', fakeAsync(() => {
+      (headTagService as any).processRouteChange(route(mockItem([], ['Lizak, Jadwiga (red.)', 'Sidor, Monika'])));
+      tick();
+      expect(meta.addTag).toHaveBeenCalledWith({ name: 'citation_author', content: 'Lizak, Jadwiga' });
+      expect(meta.addTag).toHaveBeenCalledWith({ name: 'citation_author', content: 'Sidor, Monika' });
+    }));
+
+    it('should not emit editors as citation_author when the item has authors', fakeAsync(() => {
+      (headTagService as any).processRouteChange(route(mockItem(['Sulimski, Adam'], ['Felczak, Joanna'])));
+      tick();
+      expect(meta.addTag).toHaveBeenCalledWith({ name: 'citation_author', content: 'Sulimski, Adam' });
+      expect(meta.addTag).not.toHaveBeenCalledWith({ name: 'citation_author', content: 'Felczak, Joanna' });
+    }));
+  });
+
   describe('book chapters', () => {
     const mockChapter = (type: string, extra: { [key: string]: string }): Item => {
       const metadata = Object.assign({}, ItemMock.metadata, { 'dc.type': [{ value: type }] });

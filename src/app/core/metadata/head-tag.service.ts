@@ -299,7 +299,14 @@ export class HeadTagService {
    * Add <meta name="citation_author" ... >  to the <head>
    */
   protected setCitationAuthorTags(): void {
-    const values: string[] = this.getMetaTagValues(['dc.author', 'dc.contributor.author', 'dc.creator']);
+    let values: string[] = this.getMetaTagValues(['dc.author', 'dc.contributor.author', 'dc.creator']);
+    if (values.length === 0) {
+      // Edited volumes have editors only. Google Scholar skips pages without citation_author,
+      // so fall back to the editors, without a trailing role marker such as "(red.)".
+      values = this.getMetaTagValues(['dc.contributor.editor'])
+        .map((value: string) => value.replace(/\s*\((?:red|eds?)\.?\)\s*$/i, '').trim())
+        .filter((value: string) => value.length > 0);
+    }
     this.addMetaTags('citation_author', values);
   }
 
